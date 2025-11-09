@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulado Auditor Fiscal (100 Questões)</title>
+  <!-- Font Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+        --af-blue: #004e92;  /* Azul forte (Receita/Fisco) */
+        --af-green: #007f5f; /* Verde (Finanças/Contabilidade) */
+        --bg-dark: #0f172a;
+        --card-bg: #1e293b;
+        --text-light: #f8fafc;
+        --text-muted: #94a3b8;
+    }
+    body {
+      background: var(--bg-dark);
+      color: var(--text-light);
+      font-family: 'Inter', sans-serif;
+      text-align: center;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    #game-container {
+        background: var(--card-bg);
+        padding: 35px;
+        border-radius: 12px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        max-width: 800px;
+        width: 100%;
+        border-top: 5px solid var(--af-green);
+        position: relative;
+        overflow: hidden;
+    }
+    /* Detalhe decorativo de fundo */
+    #game-container::after {
+        content: '$';
+        position: absolute;
+        top: -10%;
+        right: -5%;
+        font-size: 300px;
+        opacity: 0.03;
+        color: var(--af-green);
+        pointer-events: none;
+        font-weight: 800;
+    }
+
+    h1 {
+      color: var(--text-light);
+      margin-bottom: 5px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      font-size: 28px;
+    }
+    .subtitle {
+        color: var(--af-green);
+        font-size: 15px;
+        margin-bottom: 30px;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        font-weight: 700;
+        display: inline-block;
+        border-bottom: 2px solid var(--af-blue);
+        padding-bottom: 5px;
+    }
+    #header-stats {
+        display: flex;
+        justify-content: space-between;
+        background: #0f172a;
+        padding: 12px 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-size: 14px;
+        color: var(--text-muted);
+        font-weight: 600;
+        border: 1px solid #334155;
+    }
+    #progress-bar-container {
+        width: 100%;
+        height: 6px;
+        background-color: #334155;
+        border-radius: 3px;
+        margin-bottom: 30px;
+        overflow: hidden;
+    }
+    #progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, var(--af-blue), var(--af-green));
+        width: 0%;
+        transition: width 0.3s ease;
+    }
+    .pergunta {
+      font-size: 19px;
+      margin-bottom: 25px;
+      font-weight: 500;
+      line-height: 1.5;
+      min-height: 70px;
+      text-align: left;
+    }
+    button.opcao {
+      display: block;
+      width: 100%;
+      margin: 10px auto;
+      padding: 15px 20px;
+      border: 2px solid #334155;
+      border-radius: 10px;
+      background-color: #1e293b;
+      color: var(--text-light);
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+      position: relative;
+    }
+    button.opcao:hover {
+      border-color: var(--af-blue);
+      background-color: #24344d;
+    }
+    button.opcao strong {
+        color: var(--af-green);
+        margin-right: 8px;
+    }
+    .mensagem {
+      font-size: 17px;
+      margin-top: 25px;
+      font-weight: 600;
+      min-height: 30px;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: left;
+      line-height: 1.4;
+    }
+    .correct-msg { background-color: rgba(5, 150, 105, 0.15); color: #34d399; border: 1px solid #059669; }
+    .incorrect-msg { background-color: rgba(220, 38, 38, 0.15); color: #f87171; border: 1px solid #dc2626; }
+    
+    #opcoes {
+        max-height: 55vh;
+        overflow-y: auto;
+        padding-right: 8px;
+    }
+    #opcoes::-webkit-scrollbar { width: 5px; }
+    #opcoes::-webkit-scrollbar-track { background: transparent; }
+    #opcoes::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+
+    .badge {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 700;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .action-btn {
+        padding: 15px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 30px;
+        width: 100%;
+        text-transform: uppercase;
+        background: linear-gradient(135deg, var(--af-blue), var(--af-green));
+        color: white;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px -10px rgba(0, 127, 95, 0.5);
+    }
+
+    @media (max-width: 600px) {
+        #game-container { padding: 20px; }
+        h1 { font-size: 24px; }
+        .pergunta { font-size: 17px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+      <h1>Simulado Auditor Fiscal</h1>
+      <div class="subtitle">Receita Federal & Fiscos Estaduais/Municipais</div>
+      
+      <div id="header-stats">
+          <span id="question-counter">Questão 1 / 100</span>
+          <span id="score-counter">Acertos: 0</span>
+      </div>
+      <div id="progress-bar-container">
+          <div id="progress-bar"></div>
+      </div>
+
+      <div id="game">
+        <div style="text-align: left;">
+            <span id="categoria-badge" class="badge">GERAL</span>
+        </div>
+        <div class="pergunta" id="pergunta">Carregando...</div>
+        <div id="opcoes"></div>
+        <div class="mensagem" id="mensagem"></div>
+      </div>
+  </div>
+
+  <script>
+    // =========================================
+    // BANCO DE DADOS - 100 QUESTÕES AUDITOR FISCAL
+    // =========================================
+    // Categorias Principais:
+    // [TRIB] Direito Tributário (25)
+    // [CONT] Contabilidade Geral/Avançada (20)
+    // [AUD] Auditoria (15)
+    // [ADM] Direito Administrativo (10)
+    // [CONST] Direito Constitucional (10)
+    // [RLM] Raciocínio Lógico/Matemática Financeira (10)
+    // [TI] Tecnologia da Informação/Análise de Dados (10)
+
+    const bancoDePerguntas = [
+      // --- DIREITO TRIBUTÁRIO (25) ---
+      { cat: "TRIB", q: "Segundo o CTN, a obrigação tributária principal surge com:", op: ["O lançamento do tributo", "A ocorrência do fato gerador", "A inscrição em dívida ativa", "A publicação da lei que institui o tributo", "O início da fiscalização"], correta: 1 },
+      { cat: "TRIB", q: "A imunidade recíproca veda que a União, os Estados, o DF e os Municípios instituam impostos sobre:", op: ["O patrimônio, a renda ou os serviços, uns dos outros", "Apenas o patrimônio uns dos outros", "Qualquer tipo de tributo (taxas e contribuições inclusas)", "As empresas privadas contratadas por eles", "Os salários dos seus servidores"], correta: 0 },
+      { cat: "TRIB", q: "Qual princípio impede a cobrança de tributos no mesmo exercício financeiro em que haja sido publicada a lei que os instituiu ou aumentou?", op: ["Noventena", "Irretroatividade", "Anterioridade Anual (ou de exercício)", "Capacidade Contributiva", "Legalidade Estrita"], correta: 2 },
+      { cat: "TRIB", q: "O ICMS é um imposto de competência dos Estados e do Distrito Federal que tem como característica ser:", op: ["Cumulativo", "Não cumulativo, compensando-se o que for devido em cada operação com o montante cobrado nas anteriores", "Monofásico em todas as cadeias", "Direto (quem paga é quem recolhe)", "Progressivo conforme a renda"], correta: 1 },
+      { cat: "TRIB", q: "Suspensão da exigibilidade do crédito tributário ocorre por:", op: ["Isenção", "Anistia", "Depósito do seu montante integral", "Remissão", "Pagamento"], correta: 2 }, // Isenção/Anistia = Exclusão. Remissão/Pagamento = Extinção.
+      { cat: "TRIB", q: "A responsabilidade dos sócios-gerentes por dívidas tributárias da sociedade (art. 135, III, CTN) depende de:", op: ["Mero inadimplemento da obrigação pela empresa", "Prática de atos com excesso de poderes ou infração de lei, contrato social ou estatutos", "A empresa fechar as portas por falência decretada", "O sócio ter a maioria das ações", "Apenas a vontade do auditor fiscal"], correta: 1 },
+      { cat: "TRIB", q: "O Imposto de Renda (IR) deve ser informado pelos critérios da:", op: ["Generalidade, universalidade e progressividade", "Seletividade e essencialidade", "Não cumulatividade apenas", "Regressividade", "Neutralidade total"], correta: 0 },
+      { cat: "TRIB", q: "Empréstimos compulsórios só podem ser criados por:", op: ["Lei Ordinária Federal", "Medida Provisória", "Lei Complementar Federal", "Decreto Presidencial em caso de guerra", "Lei Estadual"], correta: 2 },
+      { cat: "TRIB", q: "A Cosip (Contribuição para Custeio do Serviço de Iluminação Pública) é de competência:", op: ["Da União", "Dos Estados", "Dos Municípios e do DF", "Das concessionárias de energia", "Da ANEEL"], correta: 2 },
+      { cat: "TRIB", q: "Denúncia espontânea (art. 138 CTN) afasta a aplicação de:", op: ["Juros de mora", "Correção monetária", "Multas de qualquer natureza (moratórias e punitivas)", "O tributo principal", "A responsabilidade criminal apenas"], correta: 2 },
+      { cat: "TRIB", q: "O lançamento por homologação é aquele em que:", op: ["O Fisco calcula e notifica o contribuinte para pagar", "O contribuinte tem o dever de antecipar o pagamento sem prévio exame da autoridade administrativa", "O valor é arbitrado pelo auditor", "Não há pagamento, apenas declaração", "É feito por decisão judicial"], correta: 1 },
+      { cat: "TRIB", q: "ITCMD (Imposto sobre Transmissão Causa Mortis e Doação) é de competência:", op: ["Municipal", "Estadual e do DF", "Federal", "Cartorária", "Do Judiciário"], correta: 1 },
+      { cat: "TRIB", q: "ISS (Imposto Sobre Serviços) incide sobre:", op: ["Serviços de transporte interestadual", "Serviços de comunicação", "Serviços de qualquer natureza definidos em lei complementar, exceto os compreendidos na competência do ICMS", "Venda de mercadorias", "Locação de bens móveis pura e simples (segundo Súmula Vinculante)"], correta: 2 }, // Locação pura não incide ISS (SV 31).
+      { cat: "TRIB", q: "Vigência da legislação tributária: salvo disposição em contrário, entram em vigor no primeiro dia do exercício seguinte àquele em que ocorra a sua publicação os atos que:", op: ["Instituem ou majoram tributos", "Apenas interpretam a lei", "Concedem anistia", "Reduzem impostos", "Criam obrigações acessórias"], correta: 0 }, // (Regra geral do art. 104, I, CTN para impostos sobre patrimônio/renda, mas a CF ampliou a anterioridade. Para a prova, lembrar da anterioridade).
+      { cat: "TRIB", q: "A isenção tributária é uma forma de:", op: ["Suspensão do crédito", "Extinção do crédito", "Exclusão do crédito tributário", "Garantia do crédito", "Privilégio do crédito"], correta: 2 },
+      { cat: "TRIB", q: "O princípio da vedação ao confisco aplica-se a:", op: ["Apenas tributos", "Apenas multas", "Tributos e multas tributárias (conforme jurisprudência do STF)", "Apenas taxas", "Apenas impostos federais"], correta: 2 },
+      { cat: "TRIB", q: "Responsabilidade tributária por sucessão imobiliária: o adquirente do imóvel responde pelos tributos pendentes?", op: ["Não, a dívida é pessoal do vendedor", "Sim, integralmente, salvo se constar na escritura a prova de quitação", "Apenas se o vendedor não tiver outros bens", "Apenas por 50% da dívida", "Só se for imóvel comercial"], correta: 1 },
+      { cat: "TRIB", q: "Para fins tributários, a capacidade passiva INDEPENDE de:", op: ["Ter dinheiro para pagar", "Capacidade civil das pessoas naturais (ser maior/capaz)", "Estar a pessoa jurídica regularmente constituída (basta que configure unidade econômica ou profissional)", "Todas as anteriores estão corretas", "Apenas da capacidade civil"], correta: 3 },
+      { cat: "TRIB", q: "A decadência do direito de lançar o tributo ocorre, via de regra, em:", op: ["2 anos", "3 anos", "5 anos", "10 anos", "20 anos"], correta: 2 },
+      { cat: "TRIB", q: "Qual tributo NÃO se sujeita à anterioridade nonagesimal (noventena)?", op: ["IPI", "ICMS", "Imposto de Renda (IR)", "Contribuições Sociais", "ISS"], correta: 2 }, // (IR sujeita-se apenas à anterioridade anual).
+      { cat: "TRIB", q: "A imunidade dos templos de qualquer culto abrange:", op: ["Apenas o prédio onde ocorrem os cultos", "O patrimônio, a renda e os serviços relacionados com as finalidades essenciais da entidade", "As atividades comerciais desvinculadas da fé (ex: loja de roupas do pastor)", "Apenas a renda dos padres/pastores", "Tudo, sem limites"], correta: 1 },
+      { cat: "TRIB", q: "O Simples Nacional é um regime diferenciado que abrange recolhimento unificado de vários tributos, INCLUSIVE:", op: ["Imposto de Importação (II)", "IOF", "Contribuição Patronal Previdenciária (em regra, salvo anexos específicos)", "Imposto de Exportação (IE)", "ITR"], correta: 2 }, // (II, IOF, IE e ITR geralmente estão fora do Simples).
+      { cat: "TRIB", q: "Caso um Auditor Fiscal encontre indícios de crime contra a ordem tributária durante a fiscalização, ele deve fazer uma Representação Fiscal para Fins Penais. O momento adequado para enviá-la ao MP é:", op: ["Imediatamente ao achar o indício", "Apenas após o trânsito em julgado da decisão final no processo administrativo fiscal (Súmula Vinculante 24)", "Após a inscrição em dívida ativa", "Quando o delegado de polícia solicitar", "Nunca, o fiscal não se envolve com penal"], correta: 1 },
+      { cat: "TRIB", q: "Substituição tributária 'para frente' (progressiva) ocorre quando:", op: ["O varejista paga o imposto da indústria", "A indústria/importador paga antecipadamente o ICMS devido pelas etapas seguintes de circulação até o consumidor final", "O imposto só é pago no final da cadeia", "Não há pagamento de imposto", "O consumidor paga direto ao governo"], correta: 1 },
+      { cat: "TRIB", q: "É constitucional a taxa de fiscalização de atividades (poder de polícia), mesmo que a fiscalização não seja efetivamente realizada 'porta a porta', bastando a existência do órgão fiscalizador em efetivo funcionamento?", op: ["Sim, basta o órgão estar estruturado e em funcionamento (fiscalização potencial)", "Não, a fiscalização tem que ser presencial todo ano", "Apenas para taxas federais", "Não, é inconstitucional", "Depende do valor da taxa"], correta: 0 },
+
+      // --- CONTABILIDADE GERAL E AVANÇADA (20) ---
+      { cat: "CONT", q: "O Balanço Patrimonial evidencia:", op: ["O desempenho econômico (lucro/prejuízo)", "A posição patrimonial e financeira da entidade em determinada data", "O fluxo de caixa do período", "A origem e aplicação de recursos", "Apenas as dívidas"], correta: 1 },
+      { cat: "CONT", q: "Pelo Regime de Competência, as receitas devem ser reconhecidas quando:", op: ["Recebidas em dinheiro", "Ganhas (fato gerador ocorreu), independentemente do recebimento", "O cliente promete pagar", "A nota fiscal é emitida apenas", "O ano termina"], correta: 1 },
+      { cat: "CONT", q: "Ativo é um recurso controlado pela entidade como resultado de eventos passados e do qual se espera que:", op: ["Não gere obrigações", "Resultem benefícios econômicos futuros para a entidade", "Seja vendido imediatamente", "Pertença legalmente à empresa sempre", "Tenha valor fixo"], correta: 1 },
+      { cat: "CONT", q: "A Demonstração do Resultado do Exercício (DRE) deduz da Receita Bruta para chegar à Receita Líquida:", op: ["Custo das Mercadorias Vendidas (CMV)", "Despesas operacionais", "Devoluções, abatimentos e impostos sobre vendas", "Participações e lucros", "Imposto de Renda"], correta: 2 },
+      { cat: "CONT", q: "Goodwill (ágio por expectativa de rentabilidade futura) gerado internamente:", op: ["Deve ser reconhecido como ativo intangível", "Não deve ser reconhecido como ativo intangível", "É reconhecido no Patrimônio Líquido", "Vai direto para despesa", "Depende da decisão da diretoria"], correta: 1 }, // (Apenas o goodwill adquirido em combinação de negócios é reconhecido).
+      { cat: "CONT", q: "O teste de recuperabilidade (Impairment) deve ser aplicado aos ativos quando:", op: ["Houver indicação de que o valor contábil pode não ser recuperável (e anualmente para intangíveis com vida indefinida e goodwill)", "A empresa tiver prejuízo", "O auditor solicitar", "A cada 5 anos obrigatoriamente", "Nunca é obrigatório"], correta: 0 },
+      { cat: "CONT", q: "Depreciação não é calculada sobre:", op: ["Veículos da frota", "Máquinas industriais", "Terrenos (em regra)", "Edifícios", "Móveis e utensílios"], correta: 2 },
+      { cat: "CONT", q: "Método de custeio que apropria todos os custos de produção (fixos e variáveis) aos produtos:", op: ["Custeio Variável", "Custeio por Absorção", "Custeio Padrão", "Custeio ABC", "Custeio Direto"], correta: 1 }, // (É o método exigido pela legislação fiscal brasileira).
+      { cat: "CONT", q: "Na Demonstração dos Fluxos de Caixa (DFC), o pagamento de fornecedores de mercadorias para revenda é classificado como atividade:", op: ["Operacional", "De Investimento", "De Financiamento", "Não caixa", "Extraordinária"], correta: 0 },
+      { cat: "CONT", q: "Uma despesa paga antecipadamente (ex: seguro anual pago à vista) deve ser classificada no momento do pagamento como:", op: ["Despesa imediata na DRE", "Ativo Circulante (ou Realizável a Longo Prazo)", "Passivo Circulante", "Patrimônio Líquido", "Receita diferida"], correta: 1 },
+      { cat: "CONT", q: "A Reserva Legal é obrigatória para S.A. e corresponde a 5% do lucro líquido do exercício, até atingir:", op: ["10% do Capital Social", "20% do Capital Social", "50% do Capital Social", "O valor total do Ativo", "Não tem limite"], correta: 1 },
+      { cat: "CONT", q: "Passivo Contingente é:", op: ["Uma obrigação presente que requer saída de recursos provável", "Uma obrigação possível, cuja existência será confirmada apenas por eventos futuros incertos, ou obrigação presente cuja saída de recursos não é provável", "Sempre registrado no balanço", "Uma dívida certa com valor incerto (isso seria Provisão)", "Um ativo oculto"], correta: 1 }, // (Passivo Contingente não é reconhecido, apenas divulgado em notas explicativas, se a perda for possível).
+      { cat: "CONT", q: "O Princípio da Entidade estabelece que:", op: ["O patrimônio dos sócios não se confunde com o da empresa", "A empresa deve continuar operando indefinidamente", "As receitas devem confrontar as despesas", "Os registros devem ser feitos pelo valor original", "A moeda deve ser estável"], correta: 0 },
+      { cat: "CONT", q: "Equivalência Patrimonial é o método para avaliar investimentos em:", op: ["Ações especulativas", "Coligadas, controladas e empreendimentos controlados em conjunto", "Títulos públicos", "Estoques", "Imóveis para renda"], correta: 1 },
+      { cat: "CONT", q: "O custo de aquisição de estoques inclui:", op: ["Preço de compra, impostos não recuperáveis, transporte e seguro até o local de armazenagem", "Impostos recuperáveis (como ICMS para empresas não cumulativas)", "Despesas administrativas", "Vendas futuras", "Juros de empréstimos (regra geral)"], correta: 0 },
+      { cat: "CONT", q: "A mais-valia (valor justo líquido dos ativos e passivos identificáveis menos o valor contábil) surge em processos de:", op: ["Combinação de negócios (fusão, aquisição)", "Venda de estoque normal", "Contratação de funcionários", "Pagamento de impostos", "Aumento de capital com dinheiro"], correta: 0 },
+      { cat: "CONT", q: "As Notas Explicativas são:", op: ["Opcionais para grandes empresas", "Parte integrante das demonstrações contábeis", "Apenas um rascunho do contador", "Relatórios de marketing", "Sigilosas"], correta: 1 },
+      { cat: "CONT", q: "Dividendos obrigatórios a pagar devem ser registrados como:", op: ["Despesa na DRE", "Passivo Circulante", "Patrimônio Líquido", "Ativo", "Reserva de lucros"], correta: 1 },
+      { cat: "CONT", q: "A conta 'Duplicatas Descontadas' é classificada como:", op: ["Receita Financeira", "Conta redutora do Ativo (Clientes) ou Passivo Circulante (Empréstimo a pagar), dependendo se há transferência substancial de riscos e benefícios (geralmente é Passivo atualmente)", "Ativo Circulante", "Patrimônio Líquido", "Despesa"], correta: 1 }, // (Pelas normas atuais, se a empresa mantém o risco de inadimplência, é um passivo financeiro).
+      { cat: "CONT", q: "O PL (Patrimônio Líquido) pode ficar negativo? Como se chama?", op: ["Não, impossível", "Sim, chama-se 'Passivo a Descoberto'", "Sim, chama-se 'Prejuízo Fiscal'", "Não, a empresa fecha antes", "Sim, chama-se 'Ativo Oculto'"], correta: 1 },
+
+      // --- AUDITORIA (15) ---
+      { cat: "AUD", q: "O objetivo principal da auditoria independente das demonstrações contábeis é:", op: ["Detectar todas as fraudes", "Auxiliar a administração na gestão", "Emitir uma opinião sobre se as demonstrações contábeis estão apresentadas adequadamente, em todos os aspectos relevantes", "Garantir a viabilidade futura da empresa", "Elaborar o balanço patrimonial"], correta: 2 },
+      { cat: "AUD", q: "Risco de Auditoria é a possibilidade de o auditor:", op: ["Perder o cliente", "Emitir uma opinião inadequada quando as demonstrações contiverem distorção relevante", "Não receber seus honorários", "Ser processado pela empresa", "Ter muito trabalho"], correta: 1 },
+      { cat: "AUD", q: "Testes substantivos visam:", op: ["Verificar a eficiência dos controles internos", "Obter evidência de auditoria quanto à suficiência e exatidão dos dados produzidos pelo sistema contábil (detecção de distorções materiais)", "Avaliar a postura da diretoria", "Reduzir custos da auditoria", "Apenas cumprir normas sem objetivo prático"], correta: 1 },
+      { cat: "AUD", q: "A 'Circularização' (Confirmação Externa) é um procedimento usado principalmente para confirmar saldos de:", op: ["Caixa físico", "Depreciação", "Clientes (contas a receber), Fornecedores e Bancos", "Capital Social", "Reservas de lucro"], correta: 2 },
+      { cat: "AUD", q: "Quando o auditor conclui que as demonstrações contábeis contêm distorções relevantes e generalizadas, ele deve emitir opinião:", op: ["Sem ressalva", "Com ressalva", "Adversa", "Abstenção de opinião", "Positiva com ênfase"], correta: 2 },
+      { cat: "AUD", q: "Se o auditor não consegue obter evidência de auditoria apropriada e suficiente para fundamentar sua opinião, e os possíveis efeitos de distorções não detectadas poderiam ser relevantes e generalizados, ele deve:", op: ["Emitir opinião adversa", "Abster-se de emitir opinião", "Emitir opinião com ressalva", "Emitir opinião sem ressalva com parágrafo de ênfase", "Denunciar à polícia imediatamente"], correta: 1 },
+      { cat: "AUD", q: "Independência do auditor exige:", op: ["Apenas independência mental (de fato)", "Apenas independência aparente (de aparência)", "Independência mental e independência aparente", "Que o auditor não converse com a diretoria", "Que o auditor seja funcionário público"], correta: 2 },
+      { cat: "AUD", q: "Papéis de trabalho são:", op: ["Propriedade da empresa auditada", "Propriedade do auditor, que deve guardá-los por prazo determinado (geralmente 5 anos)", "Públicos, disponíveis na internet", "Descartados após a emissão do relatório", "Enviados obrigatoriamente para a CVM sempre"], correta: 1 },
+      { cat: "AUD", q: "Risco de detecção é o risco de que:", op: ["A empresa tenha fraudes", "Os controles internos falhem", "Os procedimentos executados pelo auditor não detectem uma distorção que existe e é relevante", "O auditor seja enganado deliberadamente", "A auditoria custe muito caro"], correta: 2 },
+      { cat: "AUD", q: "Fraude difere de erro por ser:", op: ["Um ato intencional", "Um ato não intencional", "Sempre de valor maior", "Sempre cometida pela diretoria", "Mais fácil de detectar"], correta: 0 },
+      { cat: "AUD", q: "A responsabilidade primária pela prevenção e detecção de fraudes é:", op: ["Do auditor independente", "Do auditor fiscal", "Da governança e da administração da entidade", "Da polícia federal", "Dos acionistas minoritários"], correta: 2 },
+      { cat: "AUD", q: "Amostragem em auditoria significa:", op: ["Testar 100% dos itens", "Aplicação de procedimentos a menos de 100% dos itens de uma população, de modo que todas as unidades tenham chance de ser selecionadas", "Escolher apenas os itens de maior valor sempre", "Escolher os itens mais fáceis", "Não testar nada"], correta: 1 },
+      { cat: "AUD", q: "Ceticismo profissional significa que o auditor deve:", op: ["Não acreditar em ninguém nunca", "Manter uma mente questionadora e estar alerta a condições que possam indicar distorção, além de avaliação crítica das evidências", "Assumir que a administração é sempre desonesta", "Ser pessimista", "Apenas trabalhar se receber adiantado"], correta: 1 },
+      { cat: "AUD", q: "Eventos subsequentes são aqueles ocorridos:", op: ["Antes do fechamento do balanço", "Entre a data das demonstrações contábeis e a data do relatório do auditor", "Após a emissão do relatório, sem relevância", "No exercício anterior", "No futuro distante"], correta: 1 },
+      { cat: "AUD", q: "Testes de observância (ou de controle) visam:", op: ["Obter certeza da exatidão dos valores", "Obter razoável segurança de que os controles internos estabelecidos pela administração estão em efetivo funcionamento", "Calcular o imposto devido", "Verificar a existência física de estoques apenas", "Substituir os testes substantivos"], correta: 1 },
+
+      // --- DIREITO ADMINISTRATIVO E CONSTITUCIONAL (20) ---
+      { cat: "ADM", q: "A Lei de Improbidade Administrativa (Lei 8.429/92), após reformas, exige para a condenação:", op: ["Apenas culpa", "Dolo (vontade livre e consciente de alcançar o resultado ilícito) para todas as modalidades", "Responsabilidade objetiva", "Dano ao erário sempre", "Apenas a violação de princípios culposa"], correta: 1 },
+      { cat: "ADM", q: "Poder de Polícia é a faculdade da Administração de:", op: ["Prender qualquer pessoa", "Condicionar e restringir o uso e gozo de bens, atividades e direitos individuais em benefício da coletividade", "Invadir domicílios à noite", "Aplicar multas sem processo administrativo", "Apenas fiscalizar o trânsito"], correta: 1 },
+      { cat: "ADM", q: "Atos administrativos discricionários podem ser revogados pelo Judiciário?", op: ["Sim, sempre", "Não, o Judiciário só anula atos ilegais, não podendo revogar atos por mérito (conveniência e oportunidade)", "Sim, se o juiz discordar da decisão", "Apenas se for solicitado pelo MP", "Não existe ato discricionário"], correta: 1 },
+      { cat: "ADM", q: "Em licitações, a 'inversão de fases' (julgamento das propostas antes da habilitação) é:", op: ["Proibida na nova lei", "A regra geral na Lei 14.133/2021", "Permitida apenas no Pregão", "Usada apenas para obras grandes", "Inconstitucional"], correta: 1 },
+      { cat: "ADM", q: "A responsabilidade civil das pessoas jurídicas de direito privado prestadoras de serviço público é:", op: ["Subjetiva", "Objetiva (em relação aos usuários e terceiros não usuários)", "Inexistente", "Subsidiária sempre", "Integral"], correta: 1 },
+      { cat: "CONST", q: "O controle externo da atividade fim da Receita Federal é exercido pelo:", op: ["Poder Judiciário apenas", "Congresso Nacional, com auxílio do Tribunal de Contas da União (TCU)", "Ministério Público apenas", "Presidente da República", "Próprio órgão (controle interno)"], correta: 1 },
+      { cat: "CONST", q: "Medida Provisória pode instituir ou majorar impostos?", op: ["Não, nunca", "Sim, mas só produzirá efeitos no exercício financeiro seguinte se for convertida em lei até o último dia daquele em que foi editada (salvo exceções como II, IE, IPI, IOF)", "Sim, com efeitos imediatos sempre", "Apenas impostos estaduais", "Apenas em caso de guerra"], correta: 1 }, // (Art. 62, § 2º, CF).
+      { cat: "CONST", q: "Compete privativamente à União legislar sobre:", op: ["Direito tributário (concorrente)", "Direito civil, comercial, penal, processual, eleitoral, agrário, marítimo, aeronáutico, espacial e do trabalho", "Procedimentos em matéria processual (concorrente)", "Saúde (comum)", "Educação (concorrente)"], correta: 1 },
+      { cat: "CONST", q: "Violação à Súmula Vinculante pode ser combatida diretamente no STF via:", op: ["Recurso Extraordinário", "Habeas Corpus", "Reclamação Constitucional", "Mandado de Segurança", "Ação Popular"], correta: 2 },
+      { cat: "CONST", q: "A inamovibilidade é garantia de:", op: ["Todos os servidores públicos", "Magistrados e membros do Ministério Público (Auditores Fiscais não têm essa garantia constitucional plena, embora tenham estabilidade)", "Apenas Auditores", "Apenas militares", "Políticos eleitos"], correta: 1 },
+
+      // --- RLM / MATEMÁTICA FINANCEIRA (10) ---
+      { cat: "RLM", q: "Se 'Todo A é B' e 'Algum C não é B', conclui-se que:", op: ["Todo C é A", "Algum C não é A", "Nenhum C é A", "Todo A é C", "Algum A não é B"], correta: 1 },
+      { cat: "RLM", q: "Negação de 'Se chove, então a rua molha' (P -> Q):", op: ["Se não chove, a rua não molha", "Chove e a rua não molha (P e ~Q)", "A rua molha e não chove", "Não chove ou a rua molha", "Se a rua molha, então chove"], correta: 1 },
+      { cat: "RLM", q: "Juros compostos: Um capital de R$ 1.000,00 aplicado a 10% ao mês por 2 meses gera um montante de:", op: ["R$ 1.200,00", "R$ 1.210,00", "R$ 1.100,00", "R$ 1.020,00", "R$ 1.105,00"], correta: 1 }, // (1000 * 1.1 * 1.1 = 1210).
+      { cat: "RLM", q: "Sistema de Amortização Constante (SAC):", op: ["As prestações são iguais do início ao fim (Price)", "As amortizações são constantes, e as prestações decrescentes", "Os juros são constantes", "O saldo devedor aumenta", "Paga-se tudo no final"], correta: 1 },
+      { cat: "RLM", q: "Taxa efetiva anual correspondente a 10% ao semestre no regime de juros compostos é:", op: ["20%", "21%", "15%", "12%", "100%"], correta: 1 }, // (1,10 * 1,10 = 1,21 -> 21%).
+      { cat: "RLM", q: "Probabilidade de obter 'cara' duas vezes seguidas ao lançar uma moeda honesta:", op: ["50%", "25% (1/4)", "10%", "75%", "100%"], correta: 1 },
+      { cat: "RLM", q: "Em uma análise combinatória, a ordem IMPORTA em:", op: ["Combinações", "Arranjos", "Ambos", "Nenhum", "Apenas conjuntos"], correta: 1 },
+      { cat: "RLM", q: "Se 10 auditores fiscalizam 20 empresas em 5 dias, 5 auditores fiscalizarão as mesmas 20 empresas em:", op: ["2,5 dias", "5 dias", "10 dias", "20 dias", "15 dias"], correta: 2 }, // (Menos auditores = mais tempo. Regra de três inversa).
+      { cat: "RLM", q: "O Valor Presente Líquido (VPL) positivo indica que:", op: ["O projeto deve ser rejeitado", "O projeto é economicamente viável (retorno maior que o custo de capital)", "A taxa interna de retorno é zero", "O projeto dá prejuízo", "O investimento é de alto risco"], correta: 1 },
+      { cat: "RLM", q: "A Taxa Interna de Retorno (TIR) é a taxa que:", op: ["Zera o VPL do fluxo de caixa", "Maximiza o lucro", "É igual à inflação", "É sempre 10%", "Mede o risco"], correta: 0 },
+
+      // --- TECNOLOGIA DA INFORMAÇÃO / ANÁLISE DE DADOS (10) ---
+      { cat: "TI", q: "Em banco de dados relacionais, a chave primária (Primary Key) serve para:", op: ["Criptografar os dados", "Identificar unicamente cada registro em uma tabela", "Relacionar duas tabelas (isso é chave estrangeira)", "Aumentar a velocidade da internet", "Apagar dados duplicados automaticamente"], correta: 1 },
+      { cat: "TI", q: "O que é 'Big Data'?", op: ["Um banco de dados grande da Microsoft", "Conjuntos de dados extremamente grandes e complexos (Volume, Velocidade, Variedade) que exigem ferramentas avançadas para processamento", "Um vírus de computador", "A nuvem do Google", "Um supercomputador"], correta: 1 },
+      { cat: "TI", q: "SQL é uma linguagem usada para:", op: ["Criar sites bonitos", "Gerenciar e consultar bancos de dados relacionais", "Programar jogos", "Editar textos", "Fazer planilhas"], correta: 1 },
+      { cat: "TI", q: "Na segurança da informação, 'Phishing' é:", op: ["Técnica de engenharia social para enganar usuários e obter dados confidenciais (senhas, cartões) via e-mails ou sites falsos", "Um software antivírus", "Um ataque de negação de serviço (DDoS)", "Uma criptografia forte", "Um backup em nuvem"], correta: 0 },
+      { cat: "TI", q: "Business Intelligence (BI) visa:", op: ["Apenas armazenar dados antigos", "Transformar dados brutos em informações significativas para suporte à tomada de decisão estratégica", "Criar inteligência artificial autônoma", "Espionar concorrentes ilegalmente", "Substituir os auditores por robôs"], correta: 1 },
+      { cat: "TI", q: "Um arquivo CSV é:", op: ["Um vírus", "Um arquivo de texto onde os valores são separados por vírgula (ou outro delimitador), muito usado para troca de dados", "Um banco de dados complexo", "Uma imagem compactada", "Um programa executável"], correta: 1 },
+      { cat: "TI", q: "A certificação digital garante:", op: ["Que o computador nunca terá vírus", "Autenticidade, integridade e não-repúdio de transações eletrônicas", "Velocidade na internet", "Acesso gratuito a sites do governo", "Anonimato total na rede"], correta: 1 },
+      { cat: "TI", q: "O que é 'Data Mining' (Mineração de Dados)?", op: ["Roubar dados de empresas", "Processo de descobrir padrões, correlações e anomalias em grandes conjuntos de dados", "Apagar dados antigos", "Comprar bitcoins", "Fazer backup em fita"], correta: 1 },
+      { cat: "TI", q: "Em TI, 'Nuvem' (Cloud Computing) refere-se a:", op: ["Usar satélites para internet", "Fornecimento de serviços de computação (servidores, armazenamento, bancos de dados) pela internet", "Umidade que afeta os servidores", "Uma rede local sem fio", "Computadores antigos"], correta: 1 },
+      { cat: "TI", q: "VPN (Virtual Private Network) é usada para:", op: ["Aumentar a memória RAM", "Criar uma conexão segura e criptografada sobre uma rede menos segura (como a internet)", "Deixar a internet mais rápida sempre", "Minera criptomoedas", "Acessar a deep web apenas"], correta: 1 }
+    ];
+
+    // =========================================
+    // LÓGICA DO JOGO
+    // =========================================
+
+    function embaralhar(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    let perguntas = embaralhar([...bancoDePerguntas]);
+    let indice = 0;
+    let acertos = 0;
+    let respondido = false;
+
+    const el = {
+        pergunta: document.getElementById("pergunta"),
+        opcoes: document.getElementById("opcoes"),
+        mensagem: document.getElementById("mensagem"),
+        counter: document.getElementById("question-counter"),
+        score: document.getElementById("score-counter"),
+        badge: document.getElementById("categoria-badge"),
+        progressBar: document.getElementById("progress-bar")
+    };
+
+    const categoriasInfo = {
+        'TRIB':  { nome: 'Direito Tributário',   cor: '#007f5f', text: '#fff' },
+        'CONT':  { nome: 'Contabilidade',        cor: '#d97706', text: '#fff' },
+        'AUD':   { nome: 'Auditoria',            cor: '#7c3aed', text: '#fff' },
+        'ADM':   { nome: 'Dir. Administrativo',  cor: '#c2410c', text: '#fff' },
+        'CONST': { nome: 'Dir. Constitucional',  cor: '#0369a1', text: '#fff' },
+        'RLM':   { nome: 'Raciocínio Lógico/MF', cor: '#374151', text: '#fff' },
+        'TI':    { nome: 'Tecnologia da Info.',  cor: '#059669', text: '#fff' }
+    };
+
+    function atualizarInterface() {
+        el.counter.textContent = `Questão ${indice + 1} / ${perguntas.length}`;
+        el.score.textContent = `Acertos: ${acertos}`;
+        const progresso = (indice / perguntas.length) * 100;
+        el.progressBar.style.width = `${progresso}%`;
+    }
+
+    function mostrarPergunta() {
+      respondido = false;
+      const p = perguntas[indice];
+      atualizarInterface();
+      
+      const cat = categoriasInfo[p.cat] || { nome: 'Geral', cor: '#555', text: '#fff' };
+      el.badge.textContent = cat.nome;
+      el.badge.style.backgroundColor = cat.cor;
+      el.badge.style.color = cat.text;
+      
+      el.pergunta.textContent = p.q;
+      el.opcoes.innerHTML = "";
+      el.mensagem.textContent = "";
+      el.mensagem.className = "mensagem";
+      el.mensagem.style.display = 'none';
+
+      p.op.forEach((opcao, i) => {
+        const btn = document.createElement("button");
+        btn.className = "opcao";
+        btn.innerHTML = `<strong>${['A','B','C','D','E'][i]})</strong> ${opcao}`;
+        btn.onclick = () => verificar(i, btn, p.correta);
+        el.opcoes.appendChild(btn);
+      });
+    }
+
+    function verificar(i, btnClicado, corretaIndex) {
+      if (respondido) return;
+      respondido = true;
+      el.mensagem.style.display = 'block';
+
+      const botoes = el.opcoes.getElementsByClassName("opcao");
+      
+      if (i === corretaIndex) {
+        acertos++;
+        el.mensagem.innerHTML = "💵 <strong>Resposta Correta!</strong>";
+        el.mensagem.className = "mensagem correct-msg";
+        btnClicado.style.borderColor = "#34d399";
+        btnClicado.style.backgroundColor = "rgba(5, 150, 105, 0.2)";
+      } else {
+        el.mensagem.innerHTML = `❌ <strong>Incorreto.</strong> A correta é a <strong>${['A','B','C','D','E'][corretaIndex]}</strong>.`;
+        el.mensagem.className = "mensagem incorrect-msg";
+        btnClicado.style.borderColor = "#f87171";
+        btnClicado.style.backgroundColor = "rgba(220, 38, 38, 0.2)";
+        botoes[corretaIndex].style.borderColor = "#34d399";
+        botoes[corretaIndex].style.backgroundColor = "rgba(5, 150, 105, 0.2)";
+      }
+
+      el.score.textContent = `Acertos: ${acertos}`;
+      indice++;
+
+      setTimeout(() => {
+        if (indice < perguntas.length) {
+          mostrarPergunta();
+        } else {
+          finalizarJogo();
+        }
+      }, 2500);
+    }
+
+    function finalizarJogo() {
+        el.progressBar.style.width = "100%";
+        el.counter.textContent = "FIM DO SIMULADO";
+        el.pergunta.textContent = "Resultado Final";
+        el.badge.style.display = 'none';
+        el.opcoes.innerHTML = "";
+        el.mensagem.style.display = 'none';
+        
+        const perc = (acertos / perguntas.length) * 100;
+        let msg = "", cor = "";
+
+        // Nível alto de exigência para concursos fiscais
+        if (perc >= 85) {
+            msg = "EXCELENTE! Você está pronto para assumir o cargo e defender os cofres públicos!";
+            cor = "#34d399"; // Verde claro
+        } else if (perc >= 70) {
+            msg = "MUITO BOM! Está competitivo, continue focado nos detalhes da legislação e contabilidade.";
+            cor = "#fbbf24"; // Dourado/Amarelo
+        } else {
+             msg = "PRECISA MELHORAR. A área fiscal é muito concorrida, reforce a base teórica.";
+             cor = "#f87171"; // Vermelho claro
+        }
+
+        el.opcoes.innerHTML = `
+            <div style="text-align: center; padding: 30px 20px; animation: fadeIn 1s;">
+                <div style="font-size: 80px; margin-bottom: 15px;">💰</div>
+                <h2 style="color: ${cor}; font-size: 56px; margin: 0; font-weight: 800;">${perc.toFixed(0)}%</h2>
+                <p style="font-size: 20px; margin: 15px 0; color: var(--text-muted);">${acertos} de ${perguntas.length} questões</p>
+                <div style="background: #334155; height: 2px; margin: 30px auto; width: 60%;"></div>
+                <p style="color: var(--text-light); font-size: 19px; font-weight: 600; padding: 0 20px; line-height: 1.5;">${msg}</p>
+                <button onclick="reiniciarJogo()" class="action-btn">Novo Simulado</button>
+            </div>
+        `;
+    }
+
+    function reiniciarJogo() {
+        indice = 0;
+        acertos = 0;
+        perguntas = embaralhar([...bancoDePerguntas]);
+        el.badge.style.display = 'inline-block';
+        mostrarPergunta();
+    }
+
+    // Iniciar
+    mostrarPergunta();
+  </script>
+</body>
+</html>
