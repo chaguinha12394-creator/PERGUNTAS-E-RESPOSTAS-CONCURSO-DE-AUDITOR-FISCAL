@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulado Auditor Fiscal (100 Questões)</title>
+  <title>Mega Simulado Auditor Fiscal (100 Questões)</title>
   <!-- Font Inter -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   <style>
@@ -33,7 +33,7 @@
         padding: 35px;
         border-radius: 12px;
         box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-        max-width: 800px;
+        max-width: 850px;
         width: 100%;
         border-top: 5px solid var(--af-green);
         position: relative;
@@ -84,9 +84,9 @@
     }
     #progress-bar-container {
         width: 100%;
-        height: 6px;
+        height: 8px;
         background-color: #334155;
-        border-radius: 3px;
+        border-radius: 4px;
         margin-bottom: 30px;
         overflow: hidden;
     }
@@ -107,8 +107,8 @@
     button.opcao {
       display: block;
       width: 100%;
-      margin: 10px auto;
-      padding: 15px 20px;
+      margin: 12px auto;
+      padding: 16px 20px;
       border: 2px solid #334155;
       border-radius: 10px;
       background-color: #1e293b;
@@ -118,6 +118,7 @@
       transition: all 0.2s ease;
       text-align: left;
       position: relative;
+      line-height: 1.4;
     }
     button.opcao:hover {
       border-color: var(--af-blue);
@@ -125,7 +126,7 @@
     }
     button.opcao strong {
         color: var(--af-green);
-        margin-right: 8px;
+        margin-right: 10px;
     }
     .mensagem {
       font-size: 17px;
@@ -188,8 +189,8 @@
 </head>
 <body>
   <div id="game-container">
-      <h1>Simulado Auditor Fiscal</h1>
-      <div class="subtitle">Receita Federal & Fiscos Estaduais/Municipais</div>
+      <h1>Mega Simulado Auditor Fiscal</h1>
+      <div class="subtitle">100 Questões - Nível Avançado</div>
       
       <div id="header-stats">
           <span id="question-counter">Questão 1 / 100</span>
@@ -203,7 +204,7 @@
         <div style="text-align: left;">
             <span id="categoria-badge" class="badge">GERAL</span>
         </div>
-        <div class="pergunta" id="pergunta">Carregando...</div>
+        <div class="pergunta" id="pergunta">Carregando base de dados...</div>
         <div id="opcoes"></div>
         <div class="mensagem" id="mensagem"></div>
       </div>
@@ -213,117 +214,125 @@
     // =========================================
     // BANCO DE DADOS - 100 QUESTÕES AUDITOR FISCAL
     // =========================================
-    // Categorias Principais:
-    // [TRIB] Direito Tributário (25)
-    // [CONT] Contabilidade Geral/Avançada (20)
+    // [TRIB] Tributário (30)
+    // [CONT] Contabilidade Geral/Avançada/Custos (25)
     // [AUD] Auditoria (15)
-    // [ADM] Direito Administrativo (10)
-    // [CONST] Direito Constitucional (10)
-    // [RLM] Raciocínio Lógico/Matemática Financeira (10)
-    // [TI] Tecnologia da Informação/Análise de Dados (10)
+    // [ADM] Administrativo/Constitucional (15)
+    // [RLM] Raciocínio Lógico/Financeira (8)
+    // [TI] Tecnologia da Informação (7)
 
     const bancoDePerguntas = [
-      // --- DIREITO TRIBUTÁRIO (25) ---
-      { cat: "TRIB", q: "Segundo o CTN, a obrigação tributária principal surge com:", op: ["O lançamento do tributo", "A ocorrência do fato gerador", "A inscrição em dívida ativa", "A publicação da lei que institui o tributo", "O início da fiscalização"], correta: 1 },
-      { cat: "TRIB", q: "A imunidade recíproca veda que a União, os Estados, o DF e os Municípios instituam impostos sobre:", op: ["O patrimônio, a renda ou os serviços, uns dos outros", "Apenas o patrimônio uns dos outros", "Qualquer tipo de tributo (taxas e contribuições inclusas)", "As empresas privadas contratadas por eles", "Os salários dos seus servidores"], correta: 0 },
-      { cat: "TRIB", q: "Qual princípio impede a cobrança de tributos no mesmo exercício financeiro em que haja sido publicada a lei que os instituiu ou aumentou?", op: ["Noventena", "Irretroatividade", "Anterioridade Anual (ou de exercício)", "Capacidade Contributiva", "Legalidade Estrita"], correta: 2 },
-      { cat: "TRIB", q: "O ICMS é um imposto de competência dos Estados e do Distrito Federal que tem como característica ser:", op: ["Cumulativo", "Não cumulativo, compensando-se o que for devido em cada operação com o montante cobrado nas anteriores", "Monofásico em todas as cadeias", "Direto (quem paga é quem recolhe)", "Progressivo conforme a renda"], correta: 1 },
-      { cat: "TRIB", q: "Suspensão da exigibilidade do crédito tributário ocorre por:", op: ["Isenção", "Anistia", "Depósito do seu montante integral", "Remissão", "Pagamento"], correta: 2 }, // Isenção/Anistia = Exclusão. Remissão/Pagamento = Extinção.
-      { cat: "TRIB", q: "A responsabilidade dos sócios-gerentes por dívidas tributárias da sociedade (art. 135, III, CTN) depende de:", op: ["Mero inadimplemento da obrigação pela empresa", "Prática de atos com excesso de poderes ou infração de lei, contrato social ou estatutos", "A empresa fechar as portas por falência decretada", "O sócio ter a maioria das ações", "Apenas a vontade do auditor fiscal"], correta: 1 },
-      { cat: "TRIB", q: "O Imposto de Renda (IR) deve ser informado pelos critérios da:", op: ["Generalidade, universalidade e progressividade", "Seletividade e essencialidade", "Não cumulatividade apenas", "Regressividade", "Neutralidade total"], correta: 0 },
-      { cat: "TRIB", q: "Empréstimos compulsórios só podem ser criados por:", op: ["Lei Ordinária Federal", "Medida Provisória", "Lei Complementar Federal", "Decreto Presidencial em caso de guerra", "Lei Estadual"], correta: 2 },
-      { cat: "TRIB", q: "A Cosip (Contribuição para Custeio do Serviço de Iluminação Pública) é de competência:", op: ["Da União", "Dos Estados", "Dos Municípios e do DF", "Das concessionárias de energia", "Da ANEEL"], correta: 2 },
-      { cat: "TRIB", q: "Denúncia espontânea (art. 138 CTN) afasta a aplicação de:", op: ["Juros de mora", "Correção monetária", "Multas de qualquer natureza (moratórias e punitivas)", "O tributo principal", "A responsabilidade criminal apenas"], correta: 2 },
-      { cat: "TRIB", q: "O lançamento por homologação é aquele em que:", op: ["O Fisco calcula e notifica o contribuinte para pagar", "O contribuinte tem o dever de antecipar o pagamento sem prévio exame da autoridade administrativa", "O valor é arbitrado pelo auditor", "Não há pagamento, apenas declaração", "É feito por decisão judicial"], correta: 1 },
-      { cat: "TRIB", q: "ITCMD (Imposto sobre Transmissão Causa Mortis e Doação) é de competência:", op: ["Municipal", "Estadual e do DF", "Federal", "Cartorária", "Do Judiciário"], correta: 1 },
-      { cat: "TRIB", q: "ISS (Imposto Sobre Serviços) incide sobre:", op: ["Serviços de transporte interestadual", "Serviços de comunicação", "Serviços de qualquer natureza definidos em lei complementar, exceto os compreendidos na competência do ICMS", "Venda de mercadorias", "Locação de bens móveis pura e simples (segundo Súmula Vinculante)"], correta: 2 }, // Locação pura não incide ISS (SV 31).
-      { cat: "TRIB", q: "Vigência da legislação tributária: salvo disposição em contrário, entram em vigor no primeiro dia do exercício seguinte àquele em que ocorra a sua publicação os atos que:", op: ["Instituem ou majoram tributos", "Apenas interpretam a lei", "Concedem anistia", "Reduzem impostos", "Criam obrigações acessórias"], correta: 0 }, // (Regra geral do art. 104, I, CTN para impostos sobre patrimônio/renda, mas a CF ampliou a anterioridade. Para a prova, lembrar da anterioridade).
-      { cat: "TRIB", q: "A isenção tributária é uma forma de:", op: ["Suspensão do crédito", "Extinção do crédito", "Exclusão do crédito tributário", "Garantia do crédito", "Privilégio do crédito"], correta: 2 },
-      { cat: "TRIB", q: "O princípio da vedação ao confisco aplica-se a:", op: ["Apenas tributos", "Apenas multas", "Tributos e multas tributárias (conforme jurisprudência do STF)", "Apenas taxas", "Apenas impostos federais"], correta: 2 },
-      { cat: "TRIB", q: "Responsabilidade tributária por sucessão imobiliária: o adquirente do imóvel responde pelos tributos pendentes?", op: ["Não, a dívida é pessoal do vendedor", "Sim, integralmente, salvo se constar na escritura a prova de quitação", "Apenas se o vendedor não tiver outros bens", "Apenas por 50% da dívida", "Só se for imóvel comercial"], correta: 1 },
-      { cat: "TRIB", q: "Para fins tributários, a capacidade passiva INDEPENDE de:", op: ["Ter dinheiro para pagar", "Capacidade civil das pessoas naturais (ser maior/capaz)", "Estar a pessoa jurídica regularmente constituída (basta que configure unidade econômica ou profissional)", "Todas as anteriores estão corretas", "Apenas da capacidade civil"], correta: 3 },
-      { cat: "TRIB", q: "A decadência do direito de lançar o tributo ocorre, via de regra, em:", op: ["2 anos", "3 anos", "5 anos", "10 anos", "20 anos"], correta: 2 },
-      { cat: "TRIB", q: "Qual tributo NÃO se sujeita à anterioridade nonagesimal (noventena)?", op: ["IPI", "ICMS", "Imposto de Renda (IR)", "Contribuições Sociais", "ISS"], correta: 2 }, // (IR sujeita-se apenas à anterioridade anual).
-      { cat: "TRIB", q: "A imunidade dos templos de qualquer culto abrange:", op: ["Apenas o prédio onde ocorrem os cultos", "O patrimônio, a renda e os serviços relacionados com as finalidades essenciais da entidade", "As atividades comerciais desvinculadas da fé (ex: loja de roupas do pastor)", "Apenas a renda dos padres/pastores", "Tudo, sem limites"], correta: 1 },
-      { cat: "TRIB", q: "O Simples Nacional é um regime diferenciado que abrange recolhimento unificado de vários tributos, INCLUSIVE:", op: ["Imposto de Importação (II)", "IOF", "Contribuição Patronal Previdenciária (em regra, salvo anexos específicos)", "Imposto de Exportação (IE)", "ITR"], correta: 2 }, // (II, IOF, IE e ITR geralmente estão fora do Simples).
-      { cat: "TRIB", q: "Caso um Auditor Fiscal encontre indícios de crime contra a ordem tributária durante a fiscalização, ele deve fazer uma Representação Fiscal para Fins Penais. O momento adequado para enviá-la ao MP é:", op: ["Imediatamente ao achar o indício", "Apenas após o trânsito em julgado da decisão final no processo administrativo fiscal (Súmula Vinculante 24)", "Após a inscrição em dívida ativa", "Quando o delegado de polícia solicitar", "Nunca, o fiscal não se envolve com penal"], correta: 1 },
-      { cat: "TRIB", q: "Substituição tributária 'para frente' (progressiva) ocorre quando:", op: ["O varejista paga o imposto da indústria", "A indústria/importador paga antecipadamente o ICMS devido pelas etapas seguintes de circulação até o consumidor final", "O imposto só é pago no final da cadeia", "Não há pagamento de imposto", "O consumidor paga direto ao governo"], correta: 1 },
-      { cat: "TRIB", q: "É constitucional a taxa de fiscalização de atividades (poder de polícia), mesmo que a fiscalização não seja efetivamente realizada 'porta a porta', bastando a existência do órgão fiscalizador em efetivo funcionamento?", op: ["Sim, basta o órgão estar estruturado e em funcionamento (fiscalização potencial)", "Não, a fiscalização tem que ser presencial todo ano", "Apenas para taxas federais", "Não, é inconstitucional", "Depende do valor da taxa"], correta: 0 },
+      // --- DIREITO TRIBUTÁRIO (30 questões) ---
+      { cat: "TRIB", q: "Segundo o CTN, a obrigação tributária principal surge com a ocorrência do fato gerador e tem por objeto o pagamento de tributo ou penalidade pecuniária. Ela extingue-se juntamente com:", op: ["O lançamento", "O crédito dela decorrente", "A inscrição em dívida ativa", "A fiscalização", "O fato gerador"], correta: 1 },
+      { cat: "TRIB", q: "A imunidade tributária dos livros, jornais, periódicos e o papel destinado a sua impressão (art. 150, VI, 'd', CF) é classificada como:", op: ["Imunidade subjetiva (ou pessoal)", "Imunidade objetiva (ou real)", "Imunidade mista", "Isenção heterônoma", "Não incidência pura"], correta: 1 }, // (Protege o objeto/bem, não a pessoa).
+      { cat: "TRIB", q: "O princípio da não cumulatividade é obrigatório para quais impostos?", op: ["IPI, ICMS e impostos residuais da União", "IR, IPTU e IPVA", "ISS, ITR e IOF", "Apenas ICMS", "Todos os impostos federais"], correta: 0 },
+      { cat: "TRIB", q: "A União pode instituir empréstimo compulsório para investimento público de caráter urgente e relevante interesse nacional. Nesse caso, ele deve respeitar:", op: ["Apenas a anterioridade anual", "Apenas a anterioridade nonagesimal", "Ambas as anterioridades (anual e nonagesimal)", "Nenhuma anterioridade (cobrança imediata)", "Apenas a legalidade"], correta: 2 }, // (Para calamidade/guerra é imediato. Para investimento público, respeita as duas).
+      { cat: "TRIB", q: "A COSIP (Contribuição de Iluminação Pública) pode ter a base de cálculo atrelada ao consumo de energia elétrica?", op: ["Não, é inconstitucional por virar taxa", "Sim, é constitucional (Súmula Vinculante 41)", "Apenas para indústrias", "Depende de lei complementar", "Apenas se o consumidor concordar"], correta: 1 },
+      { cat: "TRIB", q: "Responsabilidade por sucessão (art. 133 CTN): Se o adquirente de um fundo de comércio continuar a exploração da atividade e o alienante cessar a exploração, o adquirente responde pelos tributos relativos ao fundo de comércio:", op: ["Integralmente", "Subsidiariamente com o alienante", "Não responde", "Apenas por 50%", "Solidariamente se houver dolo"], correta: 0 }, // (Se alienante continuar ou iniciar nova atividade em 6 meses, adquirente responde subsidiariamente. Se alienante parar, adquirente responde integralmente).
+      { cat: "TRIB", q: "A denúncia espontânea (art. 138 CTN) não se aplica:", op: ["Aos tributos sujeitos a lançamento por homologação regularmente declarados, mas pagos a destempo (Súmula 360 STJ)", "Aos tributos lançados de ofício antes da notificação", "Às obrigações acessórias", "Se houver pagamento parcial", "Todas as alternativas estão corretas"], correta: 4 },
+      { cat: "TRIB", q: "O ITBI é um imposto municipal que tem como fato gerador a transmissão:", op: ["Causa mortis de bens imóveis", "Inter vivos, a qualquer título, por ato oneroso, de bens imóveis", "Inter vivos, a título gratuito (doação), de bens imóveis", "De bens móveis e imóveis", "Apenas de terrenos rurais"], correta: 1 }, // (Gratuito ou causa mortis é ITCMD, estadual).
+      { cat: "TRIB", q: "A capacidade tributária passiva independe:", op: ["Da capacidade civil das pessoas naturais", "De estar a pessoa jurídica regularmente constituída", "De achar-se a pessoa natural sujeita a medidas que importem privação ou limitação do exercício de atividades civis, comerciais ou profissionais", "Todas as anteriores", "Nenhuma das anteriores"], correta: 3 },
+      { cat: "TRIB", q: "Prescrição intercorrente na execução fiscal (Lei 6.830/80) ocorre quando o processo fica paralisado por mais de:", op: ["1 ano sem achar bens", "5 anos após o arquivamento provisório (que ocorre após 1 ano de suspensão por não localização do devedor ou bens)", "3 anos", "10 anos", "Nunca prescreve"], correta: 1 },
+      { cat: "TRIB", q: "O lançamento de ofício é obrigatório quando:", op: ["A lei assim o determine", "A declaração não seja prestada, por quem de direito, no prazo e na forma da legislação", "A pessoa obrigada, embora tenha prestado declaração, deixe de atender, no prazo e na forma da legislação, a pedido de esclarecimento formulado pela autoridade administrativa", "Se comprove falsidade, erro ou omissão quanto a qualquer elemento definido na legislação tributária como sendo de declaração obrigatória", "Todas as alternativas estão corretas"], correta: 4 },
+      { cat: "TRIB", q: "A imunidade musical (PEC da Música) isenta de impostos:", op: ["Apenas CDs e DVDs de artistas brasileiros", "Fonogramas e videofonogramas musicais produzidos no Brasil contendo obras musicais ou literomusicais de autores brasileiros e/ou obras em geral interpretadas por artistas brasileiros, bem como os suportes materiais ou arquivos digitais que os contenham", "Apenas shows ao vivo", "Instrumentos musicais importados", "Rádios comunitárias"], correta: 1 },
+      { cat: "TRIB", q: "O princípio da vedação às isenções heterônomas proíbe:", op: ["A União de instituir isenções de tributos da competência dos Estados, do DF ou dos Municípios", "Os Estados de isentarem tributos municipais", "O Município de isentar seus próprios tributos", "A União de isentar impostos federais", "O Judiciário de conceder isenções"], correta: 0 },
+      { cat: "TRIB", q: "São modalidades de extinção do crédito tributário (art. 156 CTN), EXCETO:", op: ["Pagamento", "Compensação", "Transação", "Remissão", "Moratória"], correta: 4 }, // (Moratória é suspensão).
+      { cat: "TRIB", q: "A Dívida Ativa da Fazenda Pública abrange os créditos:", op: ["Apenas tributários", "Tributários e não tributários (ex: multas administrativas, custas processuais)", "Apenas impostos", "Apenas de pessoas jurídicas", "Apenas federais"], correta: 1 },
+      { cat: "TRIB", q: "Segundo a Constituição, pertence aos Municípios:", op: ["50% do produto da arrecadação do ITR", "50% do produto da arrecadação do IPVA licenciado em seu território", "25% do produto da arrecadação do ICMS do Estado", "Todas as alternativas estão corretas", "Nenhuma das anteriores"], correta: 3 },
+      { cat: "TRIB", q: "O ISS não incide sobre:", op: ["Locação de bens móveis (Súmula Vinculante 31)", "Serviços bancários", "Serviços de saúde", "Serviços de construção civil", "Serviços de informática"], correta: 0 },
+      { cat: "TRIB", q: "A progressividade do IPTU pode ser:", op: ["Apenas fiscal (em razão do valor do imóvel)", "Fiscal e extrafiscal (no tempo, para garantir a função social da propriedade)", "Apenas extrafiscal", "É proibida", "Apenas para imóveis comerciais"], correta: 1 },
+      { cat: "TRIB", q: "CIDE-Combustíveis pode ter alíquotas reduzidas e restabelecidas por ato do Poder Executivo (Decreto)?", op: ["Sim, é uma exceção à legalidade estrita (mitigada)", "Não, apenas por lei", "Apenas se houver guerra", "Não, pois é um imposto", "Apenas para gasolina"], correta: 0 },
+      { cat: "TRIB", q: "O 'sigilo fiscal' (art. 198 CTN) veda a divulgação de informações sobre a situação econômica ou financeira do sujeito passivo ou sobre a natureza e o estado de seus negócios ou atividades. EXCETUA-SE da vedação:", op: ["Requisição de autoridade judiciária no interesse da justiça", "Solicitações de autoridade administrativa no interesse da Administração Pública, desde que comprovada a instauração regular de processo administrativo, no órgão ou na entidade respectiva, com o objetivo de investigar o sujeito passivo a que se refere a informação, por prática de infração administrativa", "Inscrições na Dívida Ativa da Fazenda Pública", "Parcelamento ou moratória", "Todas as alternativas são exceções válidas"], correta: 4 },
+      { cat: "TRIB", q: "A não incidência pura difere da isenção porque:", op: ["A não incidência ocorre quando o fato não se enquadra na hipótese de incidência da lei; a isenção é a dispensa legal do pagamento de tributo devido", "São sinônimos", "A não incidência é sempre inconstitucional", "A isenção é automática", "A não incidência depende de lei específica"], correta: 0 },
+      { cat: "TRIB", q: "O ICMS incide sobre a importação de mercadorias por pessoa física ou jurídica, ainda que não seja contribuinte habitual do imposto, qualquer que seja a sua finalidade?", op: ["Sim, sempre (Súmula Vinculante 48, em parte)", "Não, apenas se for para revenda", "Apenas se for pessoa jurídica", "Não, se for para uso próprio", "Apenas sobre bens de luxo"], correta: 0 },
+      { cat: "TRIB", q: "Para efeito de ocorrência do fato gerador do Imposto de Renda, considera-se disponibilidade econômica ou jurídica:", op: ["Apenas o recebimento em dinheiro", "O momento em que a renda ou os proventos de qualquer natureza são auferidos, independentemente de sua denominação ou localização", "Apenas após a declaração anual", "Apenas se o valor for superior a R$ 50.000", "Quando o dinheiro entra no banco"], correta: 1 },
+      { cat: "TRIB", q: "A substituição tributária é um mecanismo que atribui a responsabilidade pelo pagamento do tributo a:", op: ["Um terceiro vinculado ao fato gerador, e não ao contribuinte direto", "Apenas ao consumidor final", "Apenas à indústria", "Ao governo", "A ninguém"], correta: 0 },
+      { cat: "TRIB", q: "A elisão fiscal difere da evasão fiscal porque:", op: ["A elisão é o planejamento tributário lícito (antes do fato gerador); a evasão é a prática ilícita (fraude, sonegação, conluio) para não pagar tributo", "São a mesma coisa", "A elisão é crime", "A evasão é permitida", "Depende do valor"], correta: 0 },
+      { cat: "TRIB", q: "O IOF pode ter suas alíquotas alteradas pelo Poder Executivo?", op: ["Sim, para operações de crédito, câmbio e seguro, ou relativas a títulos ou valores mobiliários (função regulatória)", "Não, exige lei", "Apenas para reduzir", "Apenas com autorização do Banco Central", "Não, apenas pelo Senado"], correta: 0 },
+      { cat: "TRIB", q: "É possível a cobrança de taxas pela utilização efetiva ou potencial de serviços públicos específicos e divisíveis, prestados ao contribuinte ou postos a sua disposição?", op: ["Sim, ambas as formas (efetiva ou potencial)", "Não, apenas se usar efetivamente", "Apenas se o serviço for essencial", "Não, taxa só para poder de polícia", "Depende da renda do usuário"], correta: 0 },
+      { cat: "TRIB", q: "A imunidade tributária dos partidos políticos, inclusive suas fundações, das entidades sindicais dos trabalhadores, das instituições de educação e de assistência social, sem fins lucrativos, exige que atendam aos requisitos da lei. Esses requisitos (art. 14 CTN) incluem:", op: ["Não distribuírem qualquer parcela de seu patrimônio ou de suas rendas, a qualquer título", "Aplicarem integralmente, no País, os seus recursos na manutenção dos seus objetivos institucionais", "Manterem escrituração de suas receitas e despesas em livros revestidos de formalidades capazes de assegurar sua exatidão", "Todas as anteriores", "Nenhuma das anteriores"], correta: 3 },
+      { cat: "TRIB", q: "A contribuição de melhoria tem como fato gerador a valorização imobiliária decorrente de obra pública. Seu limite total é:", op: ["O valor total da despesa realizada com a obra", "O valor da valorização de cada imóvel", "50% do valor da obra", "O valor do IPTU", "Não há limite"], correta: 0 }, // (Limite individual = valorização de cada imóvel. Limite total = custo da obra).
+      { cat: "TRIB", q: "As multas tributárias podem ter caráter confiscatório?", op: ["Não, aplica-se a elas também a vedação ao confisco (embora o STF admita percentuais mais altos que para os tributos em si, como 100% do valor do tributo, mas não excessivos como 300%)", "Sim, para punir o sonegador", "Apenas se for reincidente", "Não existe limite para multas", "Sim, se a lei permitir"], correta: 0 },
 
-      // --- CONTABILIDADE GERAL E AVANÇADA (20) ---
-      { cat: "CONT", q: "O Balanço Patrimonial evidencia:", op: ["O desempenho econômico (lucro/prejuízo)", "A posição patrimonial e financeira da entidade em determinada data", "O fluxo de caixa do período", "A origem e aplicação de recursos", "Apenas as dívidas"], correta: 1 },
-      { cat: "CONT", q: "Pelo Regime de Competência, as receitas devem ser reconhecidas quando:", op: ["Recebidas em dinheiro", "Ganhas (fato gerador ocorreu), independentemente do recebimento", "O cliente promete pagar", "A nota fiscal é emitida apenas", "O ano termina"], correta: 1 },
-      { cat: "CONT", q: "Ativo é um recurso controlado pela entidade como resultado de eventos passados e do qual se espera que:", op: ["Não gere obrigações", "Resultem benefícios econômicos futuros para a entidade", "Seja vendido imediatamente", "Pertença legalmente à empresa sempre", "Tenha valor fixo"], correta: 1 },
-      { cat: "CONT", q: "A Demonstração do Resultado do Exercício (DRE) deduz da Receita Bruta para chegar à Receita Líquida:", op: ["Custo das Mercadorias Vendidas (CMV)", "Despesas operacionais", "Devoluções, abatimentos e impostos sobre vendas", "Participações e lucros", "Imposto de Renda"], correta: 2 },
-      { cat: "CONT", q: "Goodwill (ágio por expectativa de rentabilidade futura) gerado internamente:", op: ["Deve ser reconhecido como ativo intangível", "Não deve ser reconhecido como ativo intangível", "É reconhecido no Patrimônio Líquido", "Vai direto para despesa", "Depende da decisão da diretoria"], correta: 1 }, // (Apenas o goodwill adquirido em combinação de negócios é reconhecido).
-      { cat: "CONT", q: "O teste de recuperabilidade (Impairment) deve ser aplicado aos ativos quando:", op: ["Houver indicação de que o valor contábil pode não ser recuperável (e anualmente para intangíveis com vida indefinida e goodwill)", "A empresa tiver prejuízo", "O auditor solicitar", "A cada 5 anos obrigatoriamente", "Nunca é obrigatório"], correta: 0 },
-      { cat: "CONT", q: "Depreciação não é calculada sobre:", op: ["Veículos da frota", "Máquinas industriais", "Terrenos (em regra)", "Edifícios", "Móveis e utensílios"], correta: 2 },
-      { cat: "CONT", q: "Método de custeio que apropria todos os custos de produção (fixos e variáveis) aos produtos:", op: ["Custeio Variável", "Custeio por Absorção", "Custeio Padrão", "Custeio ABC", "Custeio Direto"], correta: 1 }, // (É o método exigido pela legislação fiscal brasileira).
-      { cat: "CONT", q: "Na Demonstração dos Fluxos de Caixa (DFC), o pagamento de fornecedores de mercadorias para revenda é classificado como atividade:", op: ["Operacional", "De Investimento", "De Financiamento", "Não caixa", "Extraordinária"], correta: 0 },
-      { cat: "CONT", q: "Uma despesa paga antecipadamente (ex: seguro anual pago à vista) deve ser classificada no momento do pagamento como:", op: ["Despesa imediata na DRE", "Ativo Circulante (ou Realizável a Longo Prazo)", "Passivo Circulante", "Patrimônio Líquido", "Receita diferida"], correta: 1 },
-      { cat: "CONT", q: "A Reserva Legal é obrigatória para S.A. e corresponde a 5% do lucro líquido do exercício, até atingir:", op: ["10% do Capital Social", "20% do Capital Social", "50% do Capital Social", "O valor total do Ativo", "Não tem limite"], correta: 1 },
-      { cat: "CONT", q: "Passivo Contingente é:", op: ["Uma obrigação presente que requer saída de recursos provável", "Uma obrigação possível, cuja existência será confirmada apenas por eventos futuros incertos, ou obrigação presente cuja saída de recursos não é provável", "Sempre registrado no balanço", "Uma dívida certa com valor incerto (isso seria Provisão)", "Um ativo oculto"], correta: 1 }, // (Passivo Contingente não é reconhecido, apenas divulgado em notas explicativas, se a perda for possível).
-      { cat: "CONT", q: "O Princípio da Entidade estabelece que:", op: ["O patrimônio dos sócios não se confunde com o da empresa", "A empresa deve continuar operando indefinidamente", "As receitas devem confrontar as despesas", "Os registros devem ser feitos pelo valor original", "A moeda deve ser estável"], correta: 0 },
-      { cat: "CONT", q: "Equivalência Patrimonial é o método para avaliar investimentos em:", op: ["Ações especulativas", "Coligadas, controladas e empreendimentos controlados em conjunto", "Títulos públicos", "Estoques", "Imóveis para renda"], correta: 1 },
-      { cat: "CONT", q: "O custo de aquisição de estoques inclui:", op: ["Preço de compra, impostos não recuperáveis, transporte e seguro até o local de armazenagem", "Impostos recuperáveis (como ICMS para empresas não cumulativas)", "Despesas administrativas", "Vendas futuras", "Juros de empréstimos (regra geral)"], correta: 0 },
-      { cat: "CONT", q: "A mais-valia (valor justo líquido dos ativos e passivos identificáveis menos o valor contábil) surge em processos de:", op: ["Combinação de negócios (fusão, aquisição)", "Venda de estoque normal", "Contratação de funcionários", "Pagamento de impostos", "Aumento de capital com dinheiro"], correta: 0 },
-      { cat: "CONT", q: "As Notas Explicativas são:", op: ["Opcionais para grandes empresas", "Parte integrante das demonstrações contábeis", "Apenas um rascunho do contador", "Relatórios de marketing", "Sigilosas"], correta: 1 },
-      { cat: "CONT", q: "Dividendos obrigatórios a pagar devem ser registrados como:", op: ["Despesa na DRE", "Passivo Circulante", "Patrimônio Líquido", "Ativo", "Reserva de lucros"], correta: 1 },
-      { cat: "CONT", q: "A conta 'Duplicatas Descontadas' é classificada como:", op: ["Receita Financeira", "Conta redutora do Ativo (Clientes) ou Passivo Circulante (Empréstimo a pagar), dependendo se há transferência substancial de riscos e benefícios (geralmente é Passivo atualmente)", "Ativo Circulante", "Patrimônio Líquido", "Despesa"], correta: 1 }, // (Pelas normas atuais, se a empresa mantém o risco de inadimplência, é um passivo financeiro).
-      { cat: "CONT", q: "O PL (Patrimônio Líquido) pode ficar negativo? Como se chama?", op: ["Não, impossível", "Sim, chama-se 'Passivo a Descoberto'", "Sim, chama-se 'Prejuízo Fiscal'", "Não, a empresa fecha antes", "Sim, chama-se 'Ativo Oculto'"], correta: 1 },
+      // --- CONTABILIDADE (25 questões) ---
+      { cat: "CONT", q: "O Patrimônio Líquido é composto por: Capital Social, Reservas de Capital, Ajustes de Avaliação Patrimonial, Reservas de Lucros, Ações em Tesouraria e:", op: ["Prejuízos Acumulados", "Contas a Pagar", "Estoques", "Caixa", "Fornecedores"], correta: 0 },
+      { cat: "CONT", q: "Despesa de depreciação de máquina usada na produção industrial deve ser classificada como:", op: ["Despesa Operacional", "Custo de Produção (que depois vira estoque de produtos em elaboração/acabados e só vira despesa CMV quando vendido)", "Despesa Financeira", "Perda de Capital", "Investimento"], correta: 1 },
+      { cat: "CONT", q: "Na DFC (Método Indireto), o aumento da conta 'Clientes' (Ativo Circulante) de um ano para outro deve ser:", op: ["Somado ao Lucro Líquido", "Deduzido do Lucro Líquido (pois é receita registrada que não virou caixa)", "Ignorado", "Classificado como investimento", "Classificado como financiamento"], correta: 1 },
+      { cat: "CONT", q: "Pelo método de Custeio por Absorção, os custos fixos de fabricação são:", op: ["Apropriados aos produtos", "Lançados diretamente como despesa do período", "Ignorados", "Considerados perdas", "Rateados apenas para os produtos mais caros"], correta: 0 },
+      { cat: "CONT", q: "No Custeio Variável, a Margem de Contribuição é igual a:", op: ["Receita de Vendas - Custos e Despesas Variáveis", "Receita de Vendas - Custo das Mercadorias Vendidas", "Lucro Bruto - Despesas Fixas", "Receita Líquida - Custos Fixos", "Lucro Operacional"], correta: 0 },
+      { cat: "CONT", q: "A conta 'Ajuste a Valor Presente' de clientes a longo prazo é:", op: ["Retificadora do Ativo", "Receita Financeira", "Passivo Circulante", "Patrimônio Líquido", "Despesa Antecipada"], correta: 0 },
+      { cat: "CONT", q: "O CPC 00 (Estrutura Conceitual) define 'Passivo' como:", op: ["Uma obrigação presente da entidade de transferir um recurso econômico como resultado de eventos passados", "Uma dívida futura possível", "Qualquer saída de caixa", "Um prejuízo provável", "O capital dos sócios"], correta: 0 },
+      { cat: "CONT", q: "A Reserva de Incentivos Fiscais é uma:", op: ["Reserva de Lucros", "Reserva de Capital", "Provisão", "Dívida com o governo", "Receita diferida"], correta: 0 },
+      { cat: "CONT", q: "Instrumentos Financeiros classificados como 'mensurados ao valor justo por meio de outros resultados abrangentes' têm seus ganhos/perdas não realizados registrados em:", op: ["Receita/Despesa na DRE", "Ajustes de Avaliação Patrimonial no PL (até a realização)", "Reservas de Lucro", "Passivo Não Circulante", "Ativo Intangível"], correta: 1 },
+      { cat: "CONT", q: "O que é 'Mais-valia' (em combinações de negócios)?", op: ["A diferença positiva entre o valor justo dos ativos líquidos identificáveis da adquirida e seu valor contábil", "O ágio pago por rentabilidade futura (goodwill)", "O lucro da venda de estoque", "Um tipo de imposto", "O valor das ações na bolsa"], correta: 0 },
+      { cat: "CONT", q: "Goodwill (ágio por expectativa de rentabilidade futura) derivado de combinação de negócios deve ser:", op: ["Amortizado linearmente", "Não amortizado, mas testado anualmente para impairment", "Lançado como despesa imediatamente", "Ignorado", "Registrado no PL"], correta: 1 },
+      { cat: "CONT", q: "Arrendamento Mercantil (Leasing) Financeiro: no balanço do arrendatário, deve-se registrar:", op: ["Apenas a despesa de aluguel", "Um ativo (direito de uso) e um passivo (obrigação de arrendamento)", "Nada, é off-balance", "Apenas nas notas explicativas", "Como despesa operacional total no início"], correta: 1 }, // (Norma IFRS 16 / CPC 06 R2).
+      { cat: "CONT", q: "Provisão para Créditos de Liquidação Duvidosa (PCLD) é uma conta:", op: ["Retificadora do Ativo (Clientes)", "Passivo Circulante", "Despesa Financeira", "Patrimônio Líquido", "Receita"], correta: 0 },
+      { cat: "CONT", q: "Custo Padrão é:", op: ["Um custo ideal ou esperado, pré-determinado, usado para controle e avaliação de desempenho", "O custo histórico real", "O custo médio ponderado", "O custo de reposição", "O menor custo possível"], correta: 0 },
+      { cat: "CONT", q: "Ponto de Equilíbrio Contábil é o volume de vendas em que:", op: ["A Receita Total iguala os Custos e Despesas Totais (Lucro Contábil = 0)", "A empresa tem lucro máximo", "A empresa cobre apenas os custos fixos", "O fluxo de caixa é zero", "A margem de contribuição é zero"], correta: 0 },
+      { cat: "CONT", q: "A DVA (Demonstração do Valor Adicionado) evidencia:", op: ["O quanto de riqueza a empresa criou e como ela foi distribuída (entre empregados, governo, financiadores e sócios)", "Apenas o lucro líquido", "O fluxo de caixa", "A posição patrimonial", "O pagamento de impostos apenas"], correta: 0 },
+      { cat: "CONT", q: "Estoque Final superavaliado causa:", op: ["CMV subavaliado e Lucro Bruto superavaliado", "CMV superavaliado e Lucro Bruto subavaliado", "CMV e Lucro corretos", "Apenas aumento do Ativo", "Prejuízo no exercício"], correta: 0 }, // (EF maior -> CMV = EI + C - EF -> CMV menor -> Lucro maior).
+      { cat: "CONT", q: "Dividendos recebidos de investimentos avaliados pelo Método de Equivalência Patrimonial (MEP) devem ser contabilizados na investidora como:", op: ["Receita de Dividendos", "Redução do valor do Investimento (Ativo Não Circulante)", "Aumento do PL diretamente", "Receita Financeira", "Não são contabilizados"], correta: 1 }, // (Pois o lucro da investida já foi reconhecido via equivalência, aumentando o investimento. O dividendo é apenas a realização financeira desse lucro, reduzindo o saldo do investimento e aumentando o caixa).
+      { cat: "CONT", q: "O Princípio da Continuidade pressupõe que:", op: ["A Entidade continuará em operação no futuro previsível", "A empresa vai fechar em breve", "Os ativos devem ser vendidos pelo valor de liquidação", "A contabilidade deve ser feita em dólar", "Não há inflação"], correta: 0 },
+      { cat: "CONT", q: "Ativo Intangível com vida útil indefinida:", op: ["Não sofre amortização, mas deve ser testado para impairment anualmente", "Deve ser amortizado em 10 anos", "Não sofre impairment", "Não pode ser registrado", "Vale zero"], correta: 0 },
+      { cat: "CONT", q: "Custos indiretos de fabricação (CIF) devem ser apropriados aos produtos mediante:", op: ["Rateio (baseado em algum critério como horas-máquina, mão-de-obra direta, etc.)", "Alocação direta", "Sorteio", "Estimativa aleatória", "Não são apropriados"], correta: 0 },
+      { cat: "CONT", q: "Uma empresa comprou mercadoria para revenda por R$ 1.000, com ICMS de 18% recuperável incluso. O valor a ser registrado no estoque é:", op: ["R$ 1.000", "R$ 820", "R$ 1.180", "R$ 180", "R$ 900"], correta: 1 }, // (1000 - 180 de ICMS a recuperar = 820 de custo do estoque).
+      { cat: "CONT", q: "Se a taxa interna de retorno (TIR) de um projeto for maior que a taxa mínima de atratividade (TMA), o projeto é:", op: ["Viável economicamente", "Inviável", "Indiferente", "Arriscado demais", "Sem fins lucrativos"], correta: 0 },
+      { cat: "CONT", q: "O Índice de Liquidez Corrente é calculado por:", op: ["Ativo Circulante / Passivo Circulante", "Ativo Total / Passivo Total", "(Ativo Circulante - Estoques) / Passivo Circulante", "Ativo Circulante - Passivo Circulante", "Lucro Líquido / Ativo Total"], correta: 0 },
+      { cat: "CONT", q: "A NBC TG estrutura as demonstrações contábeis. Qual NÃO é obrigatória para todas as empresas (apenas para cia aberta)?", op: ["DVA (Demonstração do Valor Adicionado)", "Balanço Patrimonial", "DRE", "DFC (se PL > 2mi ou cia aberta)", "DMPL (ou DLPA)"], correta: 0 },
 
-      // --- AUDITORIA (15) ---
-      { cat: "AUD", q: "O objetivo principal da auditoria independente das demonstrações contábeis é:", op: ["Detectar todas as fraudes", "Auxiliar a administração na gestão", "Emitir uma opinião sobre se as demonstrações contábeis estão apresentadas adequadamente, em todos os aspectos relevantes", "Garantir a viabilidade futura da empresa", "Elaborar o balanço patrimonial"], correta: 2 },
-      { cat: "AUD", q: "Risco de Auditoria é a possibilidade de o auditor:", op: ["Perder o cliente", "Emitir uma opinião inadequada quando as demonstrações contiverem distorção relevante", "Não receber seus honorários", "Ser processado pela empresa", "Ter muito trabalho"], correta: 1 },
-      { cat: "AUD", q: "Testes substantivos visam:", op: ["Verificar a eficiência dos controles internos", "Obter evidência de auditoria quanto à suficiência e exatidão dos dados produzidos pelo sistema contábil (detecção de distorções materiais)", "Avaliar a postura da diretoria", "Reduzir custos da auditoria", "Apenas cumprir normas sem objetivo prático"], correta: 1 },
-      { cat: "AUD", q: "A 'Circularização' (Confirmação Externa) é um procedimento usado principalmente para confirmar saldos de:", op: ["Caixa físico", "Depreciação", "Clientes (contas a receber), Fornecedores e Bancos", "Capital Social", "Reservas de lucro"], correta: 2 },
-      { cat: "AUD", q: "Quando o auditor conclui que as demonstrações contábeis contêm distorções relevantes e generalizadas, ele deve emitir opinião:", op: ["Sem ressalva", "Com ressalva", "Adversa", "Abstenção de opinião", "Positiva com ênfase"], correta: 2 },
-      { cat: "AUD", q: "Se o auditor não consegue obter evidência de auditoria apropriada e suficiente para fundamentar sua opinião, e os possíveis efeitos de distorções não detectadas poderiam ser relevantes e generalizados, ele deve:", op: ["Emitir opinião adversa", "Abster-se de emitir opinião", "Emitir opinião com ressalva", "Emitir opinião sem ressalva com parágrafo de ênfase", "Denunciar à polícia imediatamente"], correta: 1 },
-      { cat: "AUD", q: "Independência do auditor exige:", op: ["Apenas independência mental (de fato)", "Apenas independência aparente (de aparência)", "Independência mental e independência aparente", "Que o auditor não converse com a diretoria", "Que o auditor seja funcionário público"], correta: 2 },
-      { cat: "AUD", q: "Papéis de trabalho são:", op: ["Propriedade da empresa auditada", "Propriedade do auditor, que deve guardá-los por prazo determinado (geralmente 5 anos)", "Públicos, disponíveis na internet", "Descartados após a emissão do relatório", "Enviados obrigatoriamente para a CVM sempre"], correta: 1 },
-      { cat: "AUD", q: "Risco de detecção é o risco de que:", op: ["A empresa tenha fraudes", "Os controles internos falhem", "Os procedimentos executados pelo auditor não detectem uma distorção que existe e é relevante", "O auditor seja enganado deliberadamente", "A auditoria custe muito caro"], correta: 2 },
-      { cat: "AUD", q: "Fraude difere de erro por ser:", op: ["Um ato intencional", "Um ato não intencional", "Sempre de valor maior", "Sempre cometida pela diretoria", "Mais fácil de detectar"], correta: 0 },
-      { cat: "AUD", q: "A responsabilidade primária pela prevenção e detecção de fraudes é:", op: ["Do auditor independente", "Do auditor fiscal", "Da governança e da administração da entidade", "Da polícia federal", "Dos acionistas minoritários"], correta: 2 },
-      { cat: "AUD", q: "Amostragem em auditoria significa:", op: ["Testar 100% dos itens", "Aplicação de procedimentos a menos de 100% dos itens de uma população, de modo que todas as unidades tenham chance de ser selecionadas", "Escolher apenas os itens de maior valor sempre", "Escolher os itens mais fáceis", "Não testar nada"], correta: 1 },
-      { cat: "AUD", q: "Ceticismo profissional significa que o auditor deve:", op: ["Não acreditar em ninguém nunca", "Manter uma mente questionadora e estar alerta a condições que possam indicar distorção, além de avaliação crítica das evidências", "Assumir que a administração é sempre desonesta", "Ser pessimista", "Apenas trabalhar se receber adiantado"], correta: 1 },
-      { cat: "AUD", q: "Eventos subsequentes são aqueles ocorridos:", op: ["Antes do fechamento do balanço", "Entre a data das demonstrações contábeis e a data do relatório do auditor", "Após a emissão do relatório, sem relevância", "No exercício anterior", "No futuro distante"], correta: 1 },
-      { cat: "AUD", q: "Testes de observância (ou de controle) visam:", op: ["Obter certeza da exatidão dos valores", "Obter razoável segurança de que os controles internos estabelecidos pela administração estão em efetivo funcionamento", "Calcular o imposto devido", "Verificar a existência física de estoques apenas", "Substituir os testes substantivos"], correta: 1 },
+      // --- AUDITORIA (15 questões) ---
+      { cat: "AUD", q: "O risco de que o auditor expresse uma opinião de auditoria inadequada quando as demonstrações contábeis contiverem distorção relevante é chamado de:", op: ["Risco de Auditoria", "Risco Inerente", "Risco de Controle", "Risco de Detecção", "Risco de Negócio"], correta: 0 },
+      { cat: "AUD", q: "Testes de controle são realizados para:", op: ["Obter evidência de auditoria sobre a eficácia operacional dos controles na prevenção ou detecção e correção de distorções relevantes", "Detectar distorções relevantes diretamente nos valores", "Substituir os testes substantivos", "Calcular o lucro real", "Verificar a idoneidade dos sócios"], correta: 0 },
+      { cat: "AUD", q: "O procedimento de 'Vouching' (caminho da auditoria) consiste em:", op: ["Rastrear do documento origem para o registro contábil (teste de integridade/cobertura)", "Rastrear do registro contábil para o documento origem (teste de existência/ocorrência)", "Fazer cálculos", "Observar inventário", "Entrevistar a gerência"], correta: 1 }, // (Vouching = registro -> documento. Tracing = documento -> registro).
+      { cat: "AUD", q: "A 'revisão analítica' (procedimentos analíticos) consiste em:", op: ["Avaliação das informações contábeis por meio de análise das relações plausíveis entre dados financeiros e não financeiros (ex: análise de flutuações, índices)", "Conferência de somas", "Contagem física de caixa", "Leitura de atas", "Confirmação externa"], correta: 0 },
+      { cat: "AUD", q: "Se o auditor for impedido pela administração de realizar um procedimento importante (limitação de escopo) e os possíveis efeitos forem relevantes e generalizados, ele deve:", op: ["Abster-se de opinar", "Emitir opinião com ressalva", "Emitir opinião adversa", "Emitir opinião sem ressalva com ênfase", "Denunciar à CVM e continuar o trabalho"], correta: 0 },
+      { cat: "AUD", q: "A carta de responsabilidade da administração (representação formal) tem por objetivo:", op: ["Confirmar por escrito as declarações orais feitas ao auditor e documentar a responsabilidade da administração pelas demonstrações", "Substituir os testes de auditoria", "Isentar o auditor de responsabilidade", "Culpar o contador", "Garantir que não há fraudes"], correta: 0 },
+      { cat: "AUD", q: "Eventos subsequentes do Tipo I (que evidenciam condições que JÁ existiam na data do balanço) requerem:", op: ["Ajuste nas demonstrações contábeis", "Apenas divulgação em notas explicativas", "Nenhuma ação", "Ressalva no parecer", "Abertura de sindicância"], correta: 0 },
+      { cat: "AUD", q: "O planejamento da auditoria é uma fase:", op: ["Contínua e iterativa, que muitas vezes começa logo após (ou em conexão com) a conclusão da auditoria anterior", "Isolada, feita apenas no início", "Dispensável em pequenas empresas", "Feita apenas pelo sócio", "Que não pode ser alterada depois"], correta: 0 },
+      { cat: "AUD", q: "A materialidade (ou relevância) em auditoria depende:", op: ["Do julgamento profissional do auditor sobre a magnitude e a natureza das distorções que podem influenciar as decisões dos usuários", "Apenas de um percentual fixo do lucro", "Do valor total do ativo apenas", "Do que a diretoria acha importante", "Da legislação fiscal apenas"], correta: 0 },
+      { cat: "AUD", q: "A amostragem estatística exige:", op: ["Seleção aleatória dos itens e uso da teoria das probabilidades para avaliar os resultados", "Seleção baseada no julgamento do auditor apenas", "Testar 100% da população", "Não usar matemática", "Escolher os maiores valores"], correta: 0 },
+      { cat: "AUD", q: "Risco Inerente é:", op: ["A suscetibilidade de uma afirmação a uma distorção relevante, assumindo que NÃO existam controles relacionados", "O risco de que os controles da entidade não previnam ou detectem distorções", "O risco de que o auditor não detecte a distorção", "O risco de falência da empresa", "O risco de fraude apenas"], correta: 0 },
+      { cat: "AUD", q: "A documentação de auditoria (papéis de trabalho) deve ser suficiente para permitir que um auditor experiente, sem nenhum contato anterior com a auditoria, entenda:", op: ["A natureza, época e extensão dos procedimentos, os resultados obtidos e as conclusões alcançadas", "Apenas se houve fraude", "Apenas o lucro da empresa", "Quem são os donos da empresa", "Os segredos industriais"], correta: 0 },
+      { cat: "AUD", q: "O auditor independente deve comunicar aos responsáveis pela governança:", op: ["Deficiências significativas de controle interno identificadas durante a auditoria", "Todas as deficiências de controle, mesmo as irrelevantes", "Apenas as fraudes confirmadas", "Os nomes dos funcionários incompetentes", "O plano de marketing da empresa"], correta: 0 },
+      { cat: "AUD", q: "Em relação à fraude, o auditor tem a responsabilidade de:", op: ["Obter segurança razoável de que as demonstrações estão livres de distorção relevante, causada por fraude ou erro (mas não é garantia absoluta de detectar todas as fraudes)", "Detectar 100% das fraudes", "Investigar como a polícia", "Prender os culpados", "Ignorar se for pequena"], correta: 0 },
+      { cat: "AUD", q: "O princípio da competência profissional e devido zelo exige que o auditor:", op: ["Mantenha o conhecimento e a habilidade profissional no nível necessário e aja diligentemente de acordo com as normas técnicas", "Saiba tudo sobre todas as áreas", "Não cobre honorários", "Trabalhe de graça para ONGs", "Nunca erre"], correta: 0 },
 
-      // --- DIREITO ADMINISTRATIVO E CONSTITUCIONAL (20) ---
-      { cat: "ADM", q: "A Lei de Improbidade Administrativa (Lei 8.429/92), após reformas, exige para a condenação:", op: ["Apenas culpa", "Dolo (vontade livre e consciente de alcançar o resultado ilícito) para todas as modalidades", "Responsabilidade objetiva", "Dano ao erário sempre", "Apenas a violação de princípios culposa"], correta: 1 },
-      { cat: "ADM", q: "Poder de Polícia é a faculdade da Administração de:", op: ["Prender qualquer pessoa", "Condicionar e restringir o uso e gozo de bens, atividades e direitos individuais em benefício da coletividade", "Invadir domicílios à noite", "Aplicar multas sem processo administrativo", "Apenas fiscalizar o trânsito"], correta: 1 },
-      { cat: "ADM", q: "Atos administrativos discricionários podem ser revogados pelo Judiciário?", op: ["Sim, sempre", "Não, o Judiciário só anula atos ilegais, não podendo revogar atos por mérito (conveniência e oportunidade)", "Sim, se o juiz discordar da decisão", "Apenas se for solicitado pelo MP", "Não existe ato discricionário"], correta: 1 },
-      { cat: "ADM", q: "Em licitações, a 'inversão de fases' (julgamento das propostas antes da habilitação) é:", op: ["Proibida na nova lei", "A regra geral na Lei 14.133/2021", "Permitida apenas no Pregão", "Usada apenas para obras grandes", "Inconstitucional"], correta: 1 },
-      { cat: "ADM", q: "A responsabilidade civil das pessoas jurídicas de direito privado prestadoras de serviço público é:", op: ["Subjetiva", "Objetiva (em relação aos usuários e terceiros não usuários)", "Inexistente", "Subsidiária sempre", "Integral"], correta: 1 },
-      { cat: "CONST", q: "O controle externo da atividade fim da Receita Federal é exercido pelo:", op: ["Poder Judiciário apenas", "Congresso Nacional, com auxílio do Tribunal de Contas da União (TCU)", "Ministério Público apenas", "Presidente da República", "Próprio órgão (controle interno)"], correta: 1 },
-      { cat: "CONST", q: "Medida Provisória pode instituir ou majorar impostos?", op: ["Não, nunca", "Sim, mas só produzirá efeitos no exercício financeiro seguinte se for convertida em lei até o último dia daquele em que foi editada (salvo exceções como II, IE, IPI, IOF)", "Sim, com efeitos imediatos sempre", "Apenas impostos estaduais", "Apenas em caso de guerra"], correta: 1 }, // (Art. 62, § 2º, CF).
-      { cat: "CONST", q: "Compete privativamente à União legislar sobre:", op: ["Direito tributário (concorrente)", "Direito civil, comercial, penal, processual, eleitoral, agrário, marítimo, aeronáutico, espacial e do trabalho", "Procedimentos em matéria processual (concorrente)", "Saúde (comum)", "Educação (concorrente)"], correta: 1 },
-      { cat: "CONST", q: "Violação à Súmula Vinculante pode ser combatida diretamente no STF via:", op: ["Recurso Extraordinário", "Habeas Corpus", "Reclamação Constitucional", "Mandado de Segurança", "Ação Popular"], correta: 2 },
-      { cat: "CONST", q: "A inamovibilidade é garantia de:", op: ["Todos os servidores públicos", "Magistrados e membros do Ministério Público (Auditores Fiscais não têm essa garantia constitucional plena, embora tenham estabilidade)", "Apenas Auditores", "Apenas militares", "Políticos eleitos"], correta: 1 },
+      // --- ADM / CONST (15 questões) ---
+      { cat: "ADM", q: "A avocação de competência é:", op: ["Excepcional, temporária e deve ser justificada, permitindo que um superior atraia para si a competência de um subordinado", "A regra geral na administração", "Proibida em qualquer hipótese", "A mesma coisa que delegação", "Definitiva"], correta: 0 },
+      { cat: "ADM", q: "São atributos do ato administrativo (PATI):", op: ["Presunção de legitimidade, Autoexecutoriedade, Tipicidade e Imperatividade", "Pessoalidade, Amoralidade, Tipicidade, Ineficiência", "Publicidade, Autonomia, Transparência, Isonomia", "Perfeição, Validade, Eficácia, Exequibilidade", "Nenhum desses"], correta: 0 },
+      { cat: "ADM", q: "O regime jurídico único dos servidores públicos civis (estatutário) foi:", op: ["Restabelecido pelo STF ao suspender a eficácia da EC 19/98 nesse ponto (ADI 2135)", "Extinto definitivamente", "Substituído pela CLT para todos", "Opcional para cada órgão", "Apenas para federais"], correta: 0 },
+      { cat: "ADM", q: "A responsabilidade civil do Estado por atos legislativos típicos (leis em tese) é:", op: ["Regra geral, inexistente (salvo leis inconstitucionais declaradas pelo STF ou leis de efeitos concretos)", "Sempre objetiva", "Sempre subjetiva", "Solidária com os deputados", "Integral"], correta: 0 },
+      { cat: "ADM", q: "Em processo administrativo disciplinar (PAD), a falta de defesa técnica por advogado:", op: ["Não ofende a Constituição (Súmula Vinculante 5)", "Anula o processo sempre", "É causa de demissão do presidente da comissão", "Gera indenização automática", "Obriga a nomeação de defensor dativo sempre"], correta: 0 },
+      { cat: "CONST", q: "Remédio constitucional que dispensa advogado:", op: ["Habeas Corpus", "Mandado de Segurança", "Mandado de Injunção", "Ação Popular", "Habeas Data"], correta: 0 },
+      { cat: "CONST", q: "A fiscalização contábil, financeira, orçamentária, operacional e patrimonial da União e das entidades da administração direta e indireta, quanto à legalidade, legitimidade, economicidade, aplicação das subvenções e renúncia de receitas, será exercida pelo Congresso Nacional, mediante controle externo, e pelo sistema de:", op: ["Controle interno de cada Poder", "Controle popular apenas", "Controle do Ministério Público", "Controle da imprensa", "Controle internacional"], correta: 0 },
+      { cat: "CONST", q: "Os Territórios Federais integram a:", op: ["União", "Os Estados onde se situam", "São entes autônomos com autogoverno", "Não existem mais na teoria", "São municípios especiais"], correta: 0 },
+      { cat: "CONST", q: "É vedada a edição de medidas provisórias sobre matéria:", op: ["Relativa a nacionalidade, cidadania, direitos políticos, partidos políticos e direito eleitoral", "Tributária (todas)", "Administrativa", "Ambiental", "Econômica"], correta: 0 },
+      { cat: "CONST", q: "O Presidente da República pode delegar a atribuição de conceder indulto e comutar penas a:", op: ["Ministros de Estado, PGR ou AGU", "Apenas ao Vice-Presidente", "A qualquer cidadão", "Ao Presidente do STF", "É indelegável"], correta: 0 }, // (Art. 84, parágrafo único).
+      { cat: "ADM", q: "A 'Teoria dos Motivos Determinantes' estabelece que:", op: ["A validade do ato administrativo vincula-se aos motivos indicados como seu fundamento, de modo que, se inexistentes ou falsos, o ato é nulo (mesmo que o ato fosse discricionário e não precisasse ser motivado, se motivou, vinculou)", "O administrador pode mudar o motivo depois", "Os motivos não importam", "Apenas atos vinculados precisam de motivo verdadeiro", "O motivo é sempre secreto"], correta: 0 },
+      { cat: "ADM", q: "A Lei de Acesso à Informação (LAI) estabelece como regra:", op: ["A publicidade, sendo o sigilo a exceção", "O sigilo, sendo a publicidade a exceção", "A publicidade apenas para o que for conveniente", "O sigilo total de gastos públicos", "A cobrança por qualquer informação"], correta: 0 },
+      { cat: "CONST", q: "Direitos sociais previstos no art. 6º da CF (após emendas):", op: ["Educação, saúde, alimentação, trabalho, moradia, transporte, lazer, segurança, previdência social, proteção à maternidade e à infância, assistência aos desamparados", "Apenas saúde e educação", "Vida, liberdade, igualdade, segurança e propriedade (esses são individuais do art. 5º)", "Apenas trabalho e previdência", "Nenhum, foram revogados"], correta: 0 },
+      { cat: "CONST", q: "A ADPF (Arguição de Descumprimento de Preceito Fundamental) tem caráter:", op: ["Subsidiário (só cabe se não houver outro meio eficaz de sanar a lesividade)", "Principal sempre", "Apenas para leis municipais", "Apenas para atos anteriores à CF/88", "Recursal"], correta: 0 },
+      { cat: "ADM", q: "Organizações Sociais (OS) e Organizações da Sociedade Civil de Interesse Público (OSCIP) integram a:", op: ["Não integram a Administração Pública (são paraestatais, terceiro setor)", "Administração Indireta", "Administração Direta", "São empresas públicas", "São autarquias especiais"], correta: 0 },
 
-      // --- RLM / MATEMÁTICA FINANCEIRA (10) ---
-      { cat: "RLM", q: "Se 'Todo A é B' e 'Algum C não é B', conclui-se que:", op: ["Todo C é A", "Algum C não é A", "Nenhum C é A", "Todo A é C", "Algum A não é B"], correta: 1 },
-      { cat: "RLM", q: "Negação de 'Se chove, então a rua molha' (P -> Q):", op: ["Se não chove, a rua não molha", "Chove e a rua não molha (P e ~Q)", "A rua molha e não chove", "Não chove ou a rua molha", "Se a rua molha, então chove"], correta: 1 },
-      { cat: "RLM", q: "Juros compostos: Um capital de R$ 1.000,00 aplicado a 10% ao mês por 2 meses gera um montante de:", op: ["R$ 1.200,00", "R$ 1.210,00", "R$ 1.100,00", "R$ 1.020,00", "R$ 1.105,00"], correta: 1 }, // (1000 * 1.1 * 1.1 = 1210).
-      { cat: "RLM", q: "Sistema de Amortização Constante (SAC):", op: ["As prestações são iguais do início ao fim (Price)", "As amortizações são constantes, e as prestações decrescentes", "Os juros são constantes", "O saldo devedor aumenta", "Paga-se tudo no final"], correta: 1 },
-      { cat: "RLM", q: "Taxa efetiva anual correspondente a 10% ao semestre no regime de juros compostos é:", op: ["20%", "21%", "15%", "12%", "100%"], correta: 1 }, // (1,10 * 1,10 = 1,21 -> 21%).
-      { cat: "RLM", q: "Probabilidade de obter 'cara' duas vezes seguidas ao lançar uma moeda honesta:", op: ["50%", "25% (1/4)", "10%", "75%", "100%"], correta: 1 },
-      { cat: "RLM", q: "Em uma análise combinatória, a ordem IMPORTA em:", op: ["Combinações", "Arranjos", "Ambos", "Nenhum", "Apenas conjuntos"], correta: 1 },
-      { cat: "RLM", q: "Se 10 auditores fiscalizam 20 empresas em 5 dias, 5 auditores fiscalizarão as mesmas 20 empresas em:", op: ["2,5 dias", "5 dias", "10 dias", "20 dias", "15 dias"], correta: 2 }, // (Menos auditores = mais tempo. Regra de três inversa).
-      { cat: "RLM", q: "O Valor Presente Líquido (VPL) positivo indica que:", op: ["O projeto deve ser rejeitado", "O projeto é economicamente viável (retorno maior que o custo de capital)", "A taxa interna de retorno é zero", "O projeto dá prejuízo", "O investimento é de alto risco"], correta: 1 },
-      { cat: "RLM", q: "A Taxa Interna de Retorno (TIR) é a taxa que:", op: ["Zera o VPL do fluxo de caixa", "Maximiza o lucro", "É igual à inflação", "É sempre 10%", "Mede o risco"], correta: 0 },
+      // --- RLM / FINANCEIRA (8 questões) ---
+      { cat: "RLM", q: "Se P é V e Q é F, então o valor lógico de 'P -> Q' (condicional) é:", op: ["Falso (Vera Fischer é Falsa)", "Verdadeiro", "Depende", "Ambos", "Nenhum"], correta: 0 },
+      { cat: "RLM", q: "Em um grupo de 10 auditores, de quantas formas podemos formar uma comissão de 3 auditores?", op: ["120 (Combinação de 10, 3 a 3 -> 10*9*8 / 3*2*1 = 120)", "720", "30", "1000", "5040"], correta: 0 },
+      { cat: "RLM", q: "Tautologia é uma proposição composta que é:", op: ["Sempre verdadeira, independentemente dos valores lógicos das proposições simples que a compõem", "Sempre falsa (contradição)", "Às vezes verdadeira, às vezes falsa (contingência)", "Uma falácia", "Um paradoxo"], correta: 0 },
+      { cat: "RLM", q: "A taxa nominal de 24% ao ano com capitalização mensal corresponde a uma taxa efetiva mensal de:", op: ["2% (24% / 12)", "2,4%", "20%", "12%", "4%"], correta: 0 },
+      { cat: "RLM", q: "O valor atual de um fluxo de caixa futuro, descontado a uma determinada taxa de juros, é chamado de:", op: ["Valor Presente (VP)", "Valor Futuro (VF)", "Montante", "Taxa Interna de Retorno", "Valor Residual"], correta: 0 },
+      { cat: "RLM", q: "A negação de 'Todo auditor é honesto' é:", op: ["Algum auditor não é honesto (ou 'Pelo menos um auditor não é honesto')", "Nenhum auditor é honesto", "Todo auditor é desonesto", "João não é auditor", "Algum auditor é honesto"], correta: 0 },
+      { cat: "RLM", q: "Em juros simples, um capital dobra de valor em 5 meses se a taxa mensal for de:", op: ["20% (100% / 5 meses = 20% ao mês)", "10%", "50%", "5%", "25%"], correta: 0 },
+      { cat: "RLM", q: "Se A e B são eventos independentes, a probabilidade de ambos ocorrerem (P(A e B)) é:", op: ["P(A) * P(B)", "P(A) + P(B)", "P(A) / P(B)", "Zero", "Um"], correta: 0 },
 
-      // --- TECNOLOGIA DA INFORMAÇÃO / ANÁLISE DE DADOS (10) ---
-      { cat: "TI", q: "Em banco de dados relacionais, a chave primária (Primary Key) serve para:", op: ["Criptografar os dados", "Identificar unicamente cada registro em uma tabela", "Relacionar duas tabelas (isso é chave estrangeira)", "Aumentar a velocidade da internet", "Apagar dados duplicados automaticamente"], correta: 1 },
-      { cat: "TI", q: "O que é 'Big Data'?", op: ["Um banco de dados grande da Microsoft", "Conjuntos de dados extremamente grandes e complexos (Volume, Velocidade, Variedade) que exigem ferramentas avançadas para processamento", "Um vírus de computador", "A nuvem do Google", "Um supercomputador"], correta: 1 },
-      { cat: "TI", q: "SQL é uma linguagem usada para:", op: ["Criar sites bonitos", "Gerenciar e consultar bancos de dados relacionais", "Programar jogos", "Editar textos", "Fazer planilhas"], correta: 1 },
-      { cat: "TI", q: "Na segurança da informação, 'Phishing' é:", op: ["Técnica de engenharia social para enganar usuários e obter dados confidenciais (senhas, cartões) via e-mails ou sites falsos", "Um software antivírus", "Um ataque de negação de serviço (DDoS)", "Uma criptografia forte", "Um backup em nuvem"], correta: 0 },
-      { cat: "TI", q: "Business Intelligence (BI) visa:", op: ["Apenas armazenar dados antigos", "Transformar dados brutos em informações significativas para suporte à tomada de decisão estratégica", "Criar inteligência artificial autônoma", "Espionar concorrentes ilegalmente", "Substituir os auditores por robôs"], correta: 1 },
-      { cat: "TI", q: "Um arquivo CSV é:", op: ["Um vírus", "Um arquivo de texto onde os valores são separados por vírgula (ou outro delimitador), muito usado para troca de dados", "Um banco de dados complexo", "Uma imagem compactada", "Um programa executável"], correta: 1 },
-      { cat: "TI", q: "A certificação digital garante:", op: ["Que o computador nunca terá vírus", "Autenticidade, integridade e não-repúdio de transações eletrônicas", "Velocidade na internet", "Acesso gratuito a sites do governo", "Anonimato total na rede"], correta: 1 },
-      { cat: "TI", q: "O que é 'Data Mining' (Mineração de Dados)?", op: ["Roubar dados de empresas", "Processo de descobrir padrões, correlações e anomalias em grandes conjuntos de dados", "Apagar dados antigos", "Comprar bitcoins", "Fazer backup em fita"], correta: 1 },
-      { cat: "TI", q: "Em TI, 'Nuvem' (Cloud Computing) refere-se a:", op: ["Usar satélites para internet", "Fornecimento de serviços de computação (servidores, armazenamento, bancos de dados) pela internet", "Umidade que afeta os servidores", "Uma rede local sem fio", "Computadores antigos"], correta: 1 },
-      { cat: "TI", q: "VPN (Virtual Private Network) é usada para:", op: ["Aumentar a memória RAM", "Criar uma conexão segura e criptografada sobre uma rede menos segura (como a internet)", "Deixar a internet mais rápida sempre", "Minera criptomoedas", "Acessar a deep web apenas"], correta: 1 }
+      // --- TI / ANÁLISE DE DADOS (7 questões) ---
+      { cat: "TI", q: "Em modelagem de dados relacional, a normalização visa:", op: ["Minimizar a redundância e evitar anomalias de inserção, atualização e exclusão", "Aumentar o espaço ocupado em disco", "Criar mais tabelas desnecessárias", "Criptografar os dados", "Fazer backup"], correta: 0 },
+      { cat: "TI", q: "O comando SQL para recuperar dados de uma tabela é:", op: ["SELECT", "INSERT", "UPDATE", "DELETE", "CREATE"], correta: 0 },
+      { cat: "TI", q: "Um 'Data Warehouse' (DW) é:", op: ["Um repositório centralizado de dados integrados de várias fontes, otimizado para consulta e análise (OLAP), mantendo histórico", "Um banco de dados operacional do dia a dia (OLTP)", "Um software antivírus", "Um hardware de armazenamento apenas", "Uma planilha Excel grande"], correta: 0 },
+      { cat: "TI", q: "Em segurança da informação, a 'Assinatura Digital' garante, além da autenticidade e integridade, o:", op: ["Não repúdio (irretratabilidade) - o autor não pode negar que assinou", "Sigilo absoluto (para isso precisa criptografar o conteúdo, a assinatura em si não garante sigilo do documento)", "Anonimato", "Velocidade", "Disponibilidade"], correta: 0 },
+      { cat: "TI", q: "O conceito de 'Blockchain' baseia-se em:", op: ["Um livro-razão distribuído, descentralizado e imutável, onde os registros (blocos) são ligados criptograficamente", "Um banco de dados centralizado no Banco Central", "Uma nuvem privada da Receita", "Um software de contabilidade tradicional", "Uma planilha compartilhada no Google Drive"], correta: 0 },
+      { cat: "TI", q: "ETL (Extract, Transform, Load) é o processo de:", op: ["Extrair dados de diversas fontes, transformá-los para atender às necessidades de negócio e carregá-los em um destino (ex: Data Warehouse)", "Apenas fazer backup", "Criar sites", "Instalar programas", "Consertar computadores"], correta: 0 },
+      { cat: "TI", q: "Um ataque 'Ransomware':", op: ["Criptografa os dados da vítima e exige pagamento de resgate para liberar a chave de descriptografia", "Rouba senhas apenas", "Deixa o computador lento", "Mostra propagandas indesejadas", "Queima o processador"], correta: 0 }
     ];
 
     // =========================================
@@ -357,8 +366,8 @@
         'TRIB':  { nome: 'Direito Tributário',   cor: '#007f5f', text: '#fff' },
         'CONT':  { nome: 'Contabilidade',        cor: '#d97706', text: '#fff' },
         'AUD':   { nome: 'Auditoria',            cor: '#7c3aed', text: '#fff' },
-        'ADM':   { nome: 'Dir. Administrativo',  cor: '#c2410c', text: '#fff' },
-        'CONST': { nome: 'Dir. Constitucional',  cor: '#0369a1', text: '#fff' },
+        'ADM':   { nome: 'Dir. Adm. / Const.',   cor: '#c2410c', text: '#fff' },
+        'CONST': { nome: 'Dir. Adm. / Const.',   cor: '#0369a1', text: '#fff' }, // Agrupado visualmente
         'RLM':   { nome: 'Raciocínio Lógico/MF', cor: '#374151', text: '#fff' },
         'TI':    { nome: 'Tecnologia da Info.',  cor: '#059669', text: '#fff' }
     };
@@ -404,7 +413,7 @@
       
       if (i === corretaIndex) {
         acertos++;
-        el.mensagem.innerHTML = "💵 <strong>Resposta Correta!</strong>";
+        el.mensagem.innerHTML = "✅ <strong>Resposta Correta!</strong>";
         el.mensagem.className = "mensagem correct-msg";
         btnClicado.style.borderColor = "#34d399";
         btnClicado.style.backgroundColor = "rgba(5, 150, 105, 0.2)";
@@ -420,18 +429,19 @@
       el.score.textContent = `Acertos: ${acertos}`;
       indice++;
 
+      // Tempo um pouco maior para questões complexas
       setTimeout(() => {
         if (indice < perguntas.length) {
           mostrarPergunta();
         } else {
           finalizarJogo();
         }
-      }, 2500);
+      }, 3000);
     }
 
     function finalizarJogo() {
         el.progressBar.style.width = "100%";
-        el.counter.textContent = "FIM DO SIMULADO";
+        el.counter.textContent = "SIMULADO ENCERRADO";
         el.pergunta.textContent = "Resultado Final";
         el.badge.style.display = 'none';
         el.opcoes.innerHTML = "";
@@ -440,21 +450,20 @@
         const perc = (acertos / perguntas.length) * 100;
         let msg = "", cor = "";
 
-        // Nível alto de exigência para concursos fiscais
-        if (perc >= 85) {
-            msg = "EXCELENTE! Você está pronto para assumir o cargo e defender os cofres públicos!";
-            cor = "#34d399"; // Verde claro
-        } else if (perc >= 70) {
-            msg = "MUITO BOM! Está competitivo, continue focado nos detalhes da legislação e contabilidade.";
-            cor = "#fbbf24"; // Dourado/Amarelo
+        if (perc >= 80) {
+            msg = "DESEMPENHO DE APROVADO! Você dominou as matérias mais difíceis. Parabéns!";
+            cor = "#34d399";
+        } else if (perc >= 60) {
+            msg = "BOM DESEMPENHO! Você está no caminho certo, reforce os pontos fracos para chegar na zona de aprovação.";
+            cor = "#fbbf24";
         } else {
-             msg = "PRECISA MELHORAR. A área fiscal é muito concorrida, reforce a base teórica.";
-             cor = "#f87171"; // Vermelho claro
+             msg = "CONTINUE ESTUDANDO! A área fiscal é desafiadora. Use este resultado para guiar seus estudos.";
+             cor = "#f87171";
         }
 
         el.opcoes.innerHTML = `
             <div style="text-align: center; padding: 30px 20px; animation: fadeIn 1s;">
-                <div style="font-size: 80px; margin-bottom: 15px;">💰</div>
+                <div style="font-size: 80px; margin-bottom: 15px;">📊</div>
                 <h2 style="color: ${cor}; font-size: 56px; margin: 0; font-weight: 800;">${perc.toFixed(0)}%</h2>
                 <p style="font-size: 20px; margin: 15px 0; color: var(--text-muted);">${acertos} de ${perguntas.length} questões</p>
                 <div style="background: #334155; height: 2px; margin: 30px auto; width: 60%;"></div>
